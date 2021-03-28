@@ -9,21 +9,29 @@
 /* Begin PBXBuildFile section */
 		3746C8872610AA65009B597B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8862610AA65009B597B /* AppDelegate.swift */; };
 		3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8882610AA65009B597B /* SceneDelegate.swift */; };
-		3746C88B2610AA65009B597B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C88A2610AA65009B597B /* ViewController.swift */; };
+		3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C88A2610AA65009B597B /* PortfolioVC.swift */; };
 		3746C88E2610AA65009B597B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3746C88C2610AA65009B597B /* Main.storyboard */; };
 		3746C8902610AA65009B597B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3746C88F2610AA65009B597B /* Assets.xcassets */; };
 		3746C8932610AA65009B597B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3746C8912610AA65009B597B /* LaunchScreen.storyboard */; };
+		3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A32610B0D2009B597B /* ZakatVC.swift */; };
+		3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A62610B0F2009B597B /* TotalVC.swift */; };
+		3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A92610B10F009B597B /* SettingsVC.swift */; };
+		37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA202610B38800E85A0C /* AddStocksVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3746C8832610AA65009B597B /* StocksZakat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksZakat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3746C8862610AA65009B597B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3746C8882610AA65009B597B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3746C88A2610AA65009B597B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3746C88A2610AA65009B597B /* PortfolioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioVC.swift; sourceTree = "<group>"; };
 		3746C88D2610AA65009B597B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3746C88F2610AA65009B597B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3746C8922610AA65009B597B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3746C8942610AA65009B597B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3746C8A32610B0D2009B597B /* ZakatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZakatVC.swift; sourceTree = "<group>"; };
+		3746C8A62610B0F2009B597B /* TotalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalVC.swift; sourceTree = "<group>"; };
+		3746C8A92610B10F009B597B /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		37DDBA202610B38800E85A0C /* AddStocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStocksVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +64,27 @@
 		3746C8852610AA65009B597B /* StocksZakat */ = {
 			isa = PBXGroup;
 			children = (
+				3746C89C2610B050009B597B /* ViewControllers */,
 				3746C8862610AA65009B597B /* AppDelegate.swift */,
 				3746C8882610AA65009B597B /* SceneDelegate.swift */,
-				3746C88A2610AA65009B597B /* ViewController.swift */,
 				3746C88C2610AA65009B597B /* Main.storyboard */,
 				3746C88F2610AA65009B597B /* Assets.xcassets */,
 				3746C8912610AA65009B597B /* LaunchScreen.storyboard */,
 				3746C8942610AA65009B597B /* Info.plist */,
 			);
 			path = StocksZakat;
+			sourceTree = "<group>";
+		};
+		3746C89C2610B050009B597B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3746C88A2610AA65009B597B /* PortfolioVC.swift */,
+				3746C8A32610B0D2009B597B /* ZakatVC.swift */,
+				3746C8A62610B0F2009B597B /* TotalVC.swift */,
+				3746C8A92610B10F009B597B /* SettingsVC.swift */,
+				37DDBA202610B38800E85A0C /* AddStocksVC.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3746C88B2610AA65009B597B /* ViewController.swift in Sources */,
+				3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */,
+				37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */,
+				3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */,
+				3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */,
+				3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */,
 				3746C8872610AA65009B597B /* AppDelegate.swift in Sources */,
 				3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */,
 			);
