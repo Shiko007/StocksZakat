@@ -56,3 +56,13 @@ struct balanceSheetElements : Codable {
     var link:String?
     var finalLink:String?
 }
+
+struct stockSymbols : Codable {
+    var currency : String?
+    var description : String?
+    var displaySymbol : String?
+    var figi : String?
+    var mic : String?
+    var symbol : String?
+    var type : String?
+}

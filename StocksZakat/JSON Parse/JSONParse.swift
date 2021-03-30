@@ -16,7 +16,20 @@ class JSONParser {
             return jsonData
         }
         catch{
-            print("Error While Reading and Parsing JSON")
+            print("Error While Reading and Parsing Balance Sheet JSON")
+        }
+        return jsonData
+    }
+    
+    func parseSymbolList(data : Data?) -> [stockSymbols]?{
+        var jsonData:[stockSymbols]?
+        let decoder = JSONDecoder()
+        do{
+            jsonData = try decoder.decode([stockSymbols].self, from: data!)
+            return jsonData
+        }
+        catch{
+            print("Error While Reading and Parsing Stocks Symbols JSON")
         }
         return jsonData
     }

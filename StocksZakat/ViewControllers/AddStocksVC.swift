@@ -7,27 +7,69 @@
 
 import UIKit
 
-class AddStocksVC : UITableViewController {
+class AddStocksVC : UIViewController {
 
+
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var allSymbolsTable: UITableView!
+    
+    var availableStocksSymbols : [String] = []
+    var searchSymbols: [String] = []
+    var isSearching = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        StocksData().getCompanyBalanceSheet(company: "AAPL") { result in
-            switch result{
-            case .success(let balanceSheet):
-                print(balanceSheet[0].symbol!)
-            case .failure(let error):
-                switch error {
-                case .badURL:
-                    print("Bad URL!")
-                case .requestFailed:
-                    print("Request Failed!")
-                case .unknown:
-                    print("Uknown Error!")
-                }
-            }
+        
+    }
+    
+
+}
+
+extension AddStocksVC: UITableViewDataSource, UITableViewDelegate {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSearching{
+            return searchSymbols.count
+        }
+        else{
+            return availableStocksSymbols.count
+        }
+        
+    }
+    
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "stocksSearchTableReuseIdentifier")
+        if isSearching{
+            cell?.textLabel?.text = searchSymbols[indexPath.row]
+        }
+        else{
+            cell?.textLabel?.text = availableStocksSymbols[indexPath.row]
+        }
+        return cell!
+    }
+    
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isSearching{
+            print(searchSymbols[indexPath[1]])
+        }
+        else{
+            print(availableStocksSymbols[indexPath[1]])
         }
     }
+}
 
-
+extension AddStocksVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchSymbols = availableStocksSymbols.filter({$0.prefix(searchText.count) == searchText})
+        isSearching = true
+        allSymbolsTable.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
 }
