@@ -18,6 +18,7 @@
 		3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A92610B10F009B597B /* SettingsVC.swift */; };
 		37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B1F26137D6800EFED88 /* StocksSymbols.swift */; };
 		37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B22261390DD00EFED88 /* LaunchVC.swift */; };
+		37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */; };
 		37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA202610B38800E85A0C /* AddStocksVC.swift */; };
 		37DDBA272610BF9400E85A0C /* StocksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA262610BF9400E85A0C /* StocksData.swift */; };
 		37EDADDD2612405900AD2483 /* StocksConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EDADDC2612405900AD2483 /* StocksConfiguration.swift */; };
@@ -40,6 +41,7 @@
 		3746C8A92610B10F009B597B /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		37874B1F26137D6800EFED88 /* StocksSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksSymbols.swift; sourceTree = "<group>"; };
 		37874B22261390DD00EFED88 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
+		37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockOverviewVC.swift; sourceTree = "<group>"; };
 		37DDBA202610B38800E85A0C /* AddStocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStocksVC.swift; sourceTree = "<group>"; };
 		37DDBA262610BF9400E85A0C /* StocksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksData.swift; sourceTree = "<group>"; };
 		37EDADDC2612405900AD2483 /* StocksConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksConfiguration.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				3746C8A62610B0F2009B597B /* TotalVC.swift */,
 				3746C8A92610B10F009B597B /* SettingsVC.swift */,
 				37DDBA202610B38800E85A0C /* AddStocksVC.swift */,
+				37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				37EDADE72612448B00AD2483 /* CodableJSON.swift in Sources */,
 				37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */,
 				3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */,
+				37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */,
 				3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */,
 				3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */,
 				3746C8872610AA65009B597B /* AppDelegate.swift in Sources */,

@@ -15,53 +15,42 @@ class AddStocksVC : UIViewController {
     
     var availableStocksSymbols : [String] = []
     var searchSymbols: [String] = []
-    var isSearching = false
+    var selectedSymbol : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchSymbols = availableStocksSymbols
         // Do any additional setup after loading the view.
-        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextView =  segue.destination as! StockOverviewVC
+        nextView.stockSymbol = selectedSymbol
+    }
 }
 
 extension AddStocksVC: UITableViewDataSource, UITableViewDelegate {
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isSearching{
-            return searchSymbols.count
-        }
-        else{
-            return availableStocksSymbols.count
-        }
-        
+        return searchSymbols.count
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stocksSearchTableReuseIdentifier")
-        if isSearching{
-            cell?.textLabel?.text = searchSymbols[indexPath.row]
-        }
-        else{
-            cell?.textLabel?.text = availableStocksSymbols[indexPath.row]
-        }
+        cell?.textLabel?.text = searchSymbols[indexPath.row]
         return cell!
     }
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isSearching{
-            print(searchSymbols[indexPath[1]])
-        }
-        else{
-            print(availableStocksSymbols[indexPath[1]])
-        }
+        selectedSymbol = searchSymbols[indexPath[1]]
+        self.view.endEditing(true)
+        performSegue(withIdentifier: "stockInfo", sender: self)
     }
 }
 
 extension AddStocksVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchSymbols = availableStocksSymbols.filter({$0.prefix(searchText.count) == searchText})
-        isSearching = true
+        searchSymbols = availableStocksSymbols.filter({$0.prefix(searchText.count) == searchText.uppercased()})
         allSymbolsTable.reloadData()
     }
     

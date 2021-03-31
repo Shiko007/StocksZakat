@@ -11,7 +11,6 @@ class PortfolioVC : UIViewController {
     
     var availableStocksSymbols : [String] = []
     
-    
     @IBOutlet weak var userPortfolioTable: UITableView!
     
     
@@ -19,6 +18,7 @@ class PortfolioVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
