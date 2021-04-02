@@ -9,8 +9,11 @@ import UIKit
 
 class StockOverviewVC : UIViewController {
     var stockSymbol: String = ""
+    var stockDataAvailable : Bool = false
     var balanceSheetInfo: balanceSheetElements?
     var balanceSheetNotAvailable: Bool = false
+    var portfolioVC : UIViewController?
+    var stockAlreadyInPortfolio : Bool = true
     
     @IBOutlet weak var stockSymbolLabel: UILabel!
     
@@ -25,9 +28,34 @@ class StockOverviewVC : UIViewController {
     @IBOutlet weak var longTermInvestmentLabel: UILabel!
     
     @IBOutlet weak var AddOrRemoveButton: UIButton!
+    
+    @IBAction func AddorRemoveButtonPressed(_ sender: Any) {
+        let updatePortfolioVC = portfolioVC as! PortfolioVC
+        if(self.stockDataAvailable == true){
+            if(stockAlreadyInPortfolio == false){
+                updatePortfolioVC.portfolio.append(stockSymbol)
+                self.dismiss(animated: true)
+            }
+            else{
+                updatePortfolioVC.portfolio.remove(at: updatePortfolioVC.portfolio.firstIndex(of: stockSymbol)!)
+                self.dismiss(animated: true)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let updatePortfolioVC = portfolioVC as! PortfolioVC
+        if(updatePortfolioVC.portfolio.contains(stockSymbol)){
+            AddOrRemoveButton.setTitle("Remove", for: .normal)
+            AddOrRemoveButton.backgroundColor = .red
+            stockAlreadyInPortfolio = true
+        }else{
+            AddOrRemoveButton.setTitle("Add", for: .normal)
+            AddOrRemoveButton.backgroundColor = .green
+            stockAlreadyInPortfolio = false
+        }
         self.stockSymbolLabel.adjustsFontSizeToFitWidth = true
         self.reportedCurrencyLabel.adjustsFontSizeToFitWidth = true
         self.fillingDateLabel.adjustsFontSizeToFitWidth = true
@@ -47,9 +75,11 @@ class StockOverviewVC : UIViewController {
                     self.totalCurrentAssetLabel.text = "Total Current Assets: " + String(balanceSheet[0].totalCurrentAssets!)
                     self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(balanceSheet[0].totalNonCurrentAssets!)
                     self.longTermInvestmentLabel.text = "Long Term Investments: " + String(balanceSheet[0].longTermInvestments!)
+                    self.stockDataAvailable = true
                 }
                 else{
                     self.stockSymbolLabel.text = "Unavailable"
+                    self.stockDataAvailable = false
                 }
             case .failure(let error):
                 switch error {

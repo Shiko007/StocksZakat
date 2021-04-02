@@ -16,6 +16,7 @@ class AddStocksVC : UIViewController {
     var availableStocksSymbols : [String] = []
     var searchSymbols: [String] = []
     var selectedSymbol : String = ""
+    var portfolioVC : UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class AddStocksVC : UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextView =  segue.destination as! StockOverviewVC
         nextView.stockSymbol = selectedSymbol
+        nextView.portfolioVC = self.portfolioVC
     }
 }
 
@@ -55,10 +57,6 @@ extension AddStocksVC: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
 }

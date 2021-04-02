@@ -9,7 +9,13 @@ import UIKit
 
 class PortfolioVC : UIViewController {
     
+    var portfolio : [String] = []{
+        didSet{
+            userPortfolioTable.reloadData()
+        }
+    }
     var availableStocksSymbols : [String] = []
+    var selectedSymbol : String = ""
     
     @IBOutlet weak var userPortfolioTable: UITableView!
     
@@ -22,8 +28,34 @@ class PortfolioVC : UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextViewController = segue.destination as! AddStocksVC
-        nextViewController.availableStocksSymbols = self.availableStocksSymbols
+        switch segue.identifier {
+        case "portfolioToStocksSegue":
+            let nextViewController = segue.destination as! AddStocksVC
+            nextViewController.availableStocksSymbols = self.availableStocksSymbols
+            nextViewController.portfolioVC = self
+        case "portfolioToStockInfoSegue":
+            let nextView =  segue.destination as! StockOverviewVC
+            nextView.stockSymbol = selectedSymbol
+            nextView.portfolioVC = self
+        default:
+            print("Unknown Segue Identifier")
+        }
     }
 }
 
+extension PortfolioVC: UITableViewDataSource, UITableViewDelegate {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return portfolio.count
+    }
+    
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioTableReuseIdentifier")
+        cell?.textLabel?.text = portfolio[indexPath.row]
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedSymbol = portfolio[indexPath[1]]
+        performSegue(withIdentifier: "portfolioToStockInfoSegue", sender: self)
+   }
+}
