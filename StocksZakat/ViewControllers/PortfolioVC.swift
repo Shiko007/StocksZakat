@@ -9,6 +9,7 @@ import UIKit
 
 class PortfolioVC : UIViewController {
     
+    var userStocksCoreDataItems : [UserStocksItem] = []
     var portfolio : [String] = []{
         didSet{
             userPortfolioTable.reloadData()
@@ -25,6 +26,14 @@ class PortfolioVC : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        loadStoredUserStockItems()
+    }
+    
+    func loadStoredUserStockItems(){
+        userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
+        for userStockItem in userStocksCoreDataItems{
+            portfolio.append(userStockItem.stockSymbol!)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

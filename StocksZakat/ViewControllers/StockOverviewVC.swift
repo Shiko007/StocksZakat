@@ -34,9 +34,11 @@ class StockOverviewVC : UIViewController {
         if(self.stockDataAvailable == true){
             if(stockAlreadyInPortfolio == false){
                 updatePortfolioVC.portfolio.append(stockSymbol)
+                UserStocksCoreData().createStockItem(stockSymbol: stockSymbol, stockCount: 0)
                 self.dismiss(animated: true)
             }
             else{
+                UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
                 updatePortfolioVC.portfolio.remove(at: updatePortfolioVC.portfolio.firstIndex(of: stockSymbol)!)
                 self.dismiss(animated: true)
             }
@@ -46,6 +48,11 @@ class StockOverviewVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        configureAddorRemoveButton()
+        UpdateViewWithStockInfo()
+    }
+    
+    func configureAddorRemoveButton(){
         let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(updatePortfolioVC.portfolio.contains(stockSymbol)){
             AddOrRemoveButton.setTitle("Remove", for: .normal)
@@ -56,6 +63,9 @@ class StockOverviewVC : UIViewController {
             AddOrRemoveButton.backgroundColor = .green
             stockAlreadyInPortfolio = false
         }
+    }
+    
+    func UpdateViewWithStockInfo(){
         self.stockSymbolLabel.adjustsFontSizeToFitWidth = true
         self.reportedCurrencyLabel.adjustsFontSizeToFitWidth = true
         self.fillingDateLabel.adjustsFontSizeToFitWidth = true
@@ -92,5 +102,17 @@ class StockOverviewVC : UIViewController {
                 }
             }
         }
+    }
+    
+    func matchStockItemWith(stockSymbol: String) -> UserStocksItem{
+        let updatePortfolioVC = portfolioVC as! PortfolioVC
+        var matchedStockItem : UserStocksItem?
+        for userStockItem in updatePortfolioVC.userStocksCoreDataItems{
+            if(userStockItem.stockSymbol == stockSymbol){
+                matchedStockItem = userStockItem
+                break
+            }
+        }
+        return matchedStockItem!
     }
 }

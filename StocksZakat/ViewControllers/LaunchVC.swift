@@ -8,7 +8,6 @@
 import UIKit
 
 class LaunchVC : UIViewController {
-    //let nextViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PortfolioVC")
     var availableStocksSymbols : [String] = []
     var symbolsLoadedFlag : Bool = false {
         didSet{
