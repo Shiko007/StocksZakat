@@ -18,7 +18,11 @@
 		3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A92610B10F009B597B /* SettingsVC.swift */; };
 		37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B1F26137D6800EFED88 /* StocksSymbols.swift */; };
 		37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B22261390DD00EFED88 /* LaunchVC.swift */; };
+		378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */; };
+		378E786A26192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */; };
 		37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */; };
+		37AA49942619264C0093821D /* userStocksItems.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37AA49922619264C0093821D /* userStocksItems.xcdatamodeld */; };
+		37AA49CA261929500093821D /* UserStocksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA49C9261929500093821D /* UserStocksCoreData.swift */; };
 		37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA202610B38800E85A0C /* AddStocksVC.swift */; };
 		37DDBA272610BF9400E85A0C /* StocksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA262610BF9400E85A0C /* StocksData.swift */; };
 		37EDADDD2612405900AD2483 /* StocksConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EDADDC2612405900AD2483 /* StocksConfiguration.swift */; };
@@ -41,7 +45,11 @@
 		3746C8A92610B10F009B597B /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		37874B1F26137D6800EFED88 /* StocksSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksSymbols.swift; sourceTree = "<group>"; };
 		37874B22261390DD00EFED88 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
+		378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockOverviewVC.swift; sourceTree = "<group>"; };
+		37AA49932619264C0093821D /* userStocksItems.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = userStocksItems.xcdatamodel; sourceTree = "<group>"; };
+		37AA49C9261929500093821D /* UserStocksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStocksCoreData.swift; sourceTree = "<group>"; };
 		37DDBA202610B38800E85A0C /* AddStocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStocksVC.swift; sourceTree = "<group>"; };
 		37DDBA262610BF9400E85A0C /* StocksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksData.swift; sourceTree = "<group>"; };
 		37EDADDC2612405900AD2483 /* StocksConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksConfiguration.swift; sourceTree = "<group>"; };
@@ -80,6 +88,7 @@
 		3746C8852610AA65009B597B /* StocksZakat */ = {
 			isa = PBXGroup;
 			children = (
+				37AA4996261926520093821D /* UserStocksCoreDataItems */,
 				37EDADE52612446600AD2483 /* JSON Parse */,
 				37EDADDF261242FC00AD2483 /* Configurations */,
 				37DDBA252610BF7F00E85A0C /* StocksData */,
@@ -106,6 +115,17 @@
 				37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		37AA4996261926520093821D /* UserStocksCoreDataItems */ = {
+			isa = PBXGroup;
+			children = (
+				378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */,
+				378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */,
+				37AA49922619264C0093821D /* userStocksItems.xcdatamodeld */,
+				37AA49C9261929500093821D /* UserStocksCoreData.swift */,
+			);
+			path = UserStocksCoreDataItems;
 			sourceTree = "<group>";
 		};
 		37DDBA252610BF7F00E85A0C /* StocksData */ = {
@@ -207,6 +227,7 @@
 			files = (
 				37DDBA272610BF9400E85A0C /* StocksData.swift in Sources */,
 				37EDADDD2612405900AD2483 /* StocksConfiguration.swift in Sources */,
+				378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */,
 				3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */,
 				37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */,
 				37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */,
@@ -215,8 +236,11 @@
 				37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */,
 				3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */,
 				37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */,
+				378E786A26192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift in Sources */,
+				37AA49CA261929500093821D /* UserStocksCoreData.swift in Sources */,
 				3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */,
 				3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */,
+				37AA49942619264C0093821D /* userStocksItems.xcdatamodeld in Sources */,
 				3746C8872610AA65009B597B /* AppDelegate.swift in Sources */,
 				37EDADE12612431000AD2483 /* GenericConfiguration.swift in Sources */,
 				3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */,
@@ -421,6 +445,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		37AA49922619264C0093821D /* userStocksItems.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				37AA49932619264C0093821D /* userStocksItems.xcdatamodel */,
+			);
+			currentVersion = 37AA49932619264C0093821D /* userStocksItems.xcdatamodel */;
+			path = userStocksItems.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3746C87B2610AA65009B597B /* Project object */;
 }
