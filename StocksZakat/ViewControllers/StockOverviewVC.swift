@@ -30,16 +30,16 @@ class StockOverviewVC : UIViewController {
     @IBOutlet weak var AddOrEditButton: UIButton!
     
     @IBAction func AddorEditButtonPressed(_ sender: Any) {
-        let updatePortfolioVC = portfolioVC as! PortfolioVC
+//        let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(self.stockDataAvailable == true){
             if(stockAlreadyInPortfolio == false){
                 performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
                 AddOrEditButton.isHidden = true
             }
             else{
-                UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
-                updatePortfolioVC.portfolio.removeValue(forKey: stockSymbol)
-                self.dismiss(animated: true)
+                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
+                AddOrEditButton.isHidden = true
+//                UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
             }
         }
     }
@@ -55,13 +55,18 @@ class StockOverviewVC : UIViewController {
         stockAddEditView.portfolioVC = portfolioVC
         stockAddEditView.stockSymbol = stockSymbol
         stockAddEditView.stockOverViewVC = self
+        stockAddEditView.isEditingStock = stockAlreadyInPortfolio
+        if(stockAlreadyInPortfolio == true){
+            let portfolioVCInstance = portfolioVC as! PortfolioVC
+            stockAddEditView.inEditingStockItem = portfolioVCInstance.matchStockItemWith(stockSymbol: stockSymbol)
+        }
     }
     
     func configureAddorRemoveButton(){
         let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(updatePortfolioVC.portfolio[stockSymbol] != nil){
-            AddOrEditButton.setTitle("Remove", for: .normal)
-            AddOrEditButton.backgroundColor = #colorLiteral(red: 0.6750947833, green: 0, blue: 0, alpha: 1)
+            AddOrEditButton.setTitle("Edit", for: .normal)
+            AddOrEditButton.backgroundColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
             stockAlreadyInPortfolio = true
         }else{
             AddOrEditButton.setTitle("Add", for: .normal)
@@ -108,17 +113,5 @@ class StockOverviewVC : UIViewController {
                 }
             }
         }
-    }
-    
-    func matchStockItemWith(stockSymbol: String) -> UserStocksItem{
-        let updatePortfolioVC = portfolioVC as! PortfolioVC
-        var matchedStockItem : UserStocksItem?
-        for userStockItem in updatePortfolioVC.userStocksCoreDataItems{
-            if(userStockItem.stockSymbol == stockSymbol){
-                matchedStockItem = userStockItem
-                break
-            }
-        }
-        return matchedStockItem!
     }
 }
