@@ -23,7 +23,6 @@ class PortfolioVC : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
-//        userPortfolioTable.register(UINib.init(nibName: "PortfolioTableCell", bundle: nil), forCellReuseIdentifier: "userPortfolioTableReuseIdentifier")
         loadStoredUserStockItems()
     }
     
@@ -32,6 +31,22 @@ class PortfolioVC : UIViewController {
         for userStockItem in userStocksCoreDataItems{
             portfolio[userStockItem.stockSymbol] = userStockItem.stocksCount
         }
+    }
+    
+    func handleDeleteSwipe(){
+        UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: selectedSymbol))
+        portfolio.removeValue(forKey: selectedSymbol)
+    }
+    
+    func matchStockItemWith(stockSymbol: String) -> UserStocksItem{
+        var matchedStockItem : UserStocksItem?
+        for userStockItem in userStocksCoreDataItems{
+            if(userStockItem.stockSymbol == stockSymbol){
+                matchedStockItem = userStockItem
+                break
+            }
+        }
+        return matchedStockItem!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,4 +81,15 @@ extension PortfolioVC: UITableViewDataSource, UITableViewDelegate {
         selectedSymbol = Array(portfolio.keys)[indexPath[1]]
         performSegue(withIdentifier: "portfolioToStockInfoSegue", sender: self)
    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive,
+                                       title: "Delete") { [weak self] (action, view, completionHandler) in
+                                        self?.handleDeleteSwipe()
+                                        completionHandler(true)
+        }
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        selectedSymbol = Array(portfolio.keys)[indexPath[1]]
+        return configuration
+    }
 }

@@ -13,6 +13,8 @@ class StockAddEditVC : UIViewController {
     var stockOverViewVC : UIViewController?
     var stockNumber: Double = 0
     var stockSymbol: String = ""
+    var isEditingStock : Bool = false
+    var inEditingStockItem : UserStocksItem?
     
     @IBOutlet weak var numberOfStocksField: UITextField! {
         didSet{
@@ -28,8 +30,14 @@ class StockAddEditVC : UIViewController {
         if(stockNumber != 0){
             let updatePortfolioVC = portfolioVC as! PortfolioVC
             let stockOverView = self.stockOverViewVC as! StockOverviewVC
-            updatePortfolioVC.portfolio[stockSymbol] = 0
-            UserStocksCoreData().createStockItem(stockSymbol: stockSymbol, stockCount: stockNumber)
+            updatePortfolioVC.portfolio[stockSymbol] = stockNumber
+            if(isEditingStock != true){
+                UserStocksCoreData().createStockItem(stockSymbol: stockSymbol, stockCount: stockNumber)
+            }else{
+                if let updateStockItem = inEditingStockItem{
+                    UserStocksCoreData().updateItem(item: updateStockItem, stockCount: stockNumber)
+                }
+            }
             updatePortfolioVC.loadStoredUserStockItems()
             stockOverView.AddOrEditButton.isHidden = false
             stockOverView.configureAddorRemoveButton()
@@ -48,9 +56,18 @@ class StockAddEditVC : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.isModalInPresentation = true
+        configureAddEditButton()
     }
     
-    
+    func configureAddEditButton(){
+        if(isEditingStock != true){
+            addButton.backgroundColor = #colorLiteral(red: 0, green: 0.5229981542, blue: 0, alpha: 1)
+            addButton.setTitle("Add", for: .normal)
+        }else{
+            addButton.backgroundColor = #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1)
+            addButton.setTitle("Modify", for: .normal)
+        }
+    }
 }
 
 extension StockAddEditVC : UITextFieldDelegate{
