@@ -17,7 +17,7 @@ extension UserStocksItem {
     }
 
     @NSManaged public var stocksCount: Double
-    @NSManaged public var stockSymbol: String?
+    @NSManaged public var stockSymbol: String
 
 }
 

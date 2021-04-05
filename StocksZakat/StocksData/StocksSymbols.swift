@@ -20,6 +20,7 @@ class StocksSymbols{
         URLSession.shared.dataTask(with: apiURL){ data , response , error in
             DispatchQueue.main.async {
                 if let data = data{
+                    print(data)
                     completion(.success(JSONParser().parseSymbolList(data: data)!))
                 } else if error != nil{
                     completion(.failure(.requestFailed))

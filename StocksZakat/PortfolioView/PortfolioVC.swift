@@ -10,7 +10,7 @@ import UIKit
 class PortfolioVC : UIViewController {
     
     var userStocksCoreDataItems : [UserStocksItem] = []
-    var portfolio : [String] = []{
+    var portfolio : [String:Double] = [:]{
         didSet{
             userPortfolioTable.reloadData()
         }
@@ -19,20 +19,18 @@ class PortfolioVC : UIViewController {
     var selectedSymbol : String = ""
     
     @IBOutlet weak var userPortfolioTable: UITableView!
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
+//        userPortfolioTable.register(UINib.init(nibName: "PortfolioTableCell", bundle: nil), forCellReuseIdentifier: "userPortfolioTableReuseIdentifier")
         loadStoredUserStockItems()
     }
     
     func loadStoredUserStockItems(){
         userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
         for userStockItem in userStocksCoreDataItems{
-            portfolio.append(userStockItem.stockSymbol!)
+            portfolio[userStockItem.stockSymbol] = userStockItem.stocksCount
         }
     }
     
@@ -58,13 +56,14 @@ extension PortfolioVC: UITableViewDataSource, UITableViewDelegate {
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioTableReuseIdentifier")
-        cell?.textLabel?.text = portfolio[indexPath.row]
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioTableReuseIdentifier") as! PortfolioTableCell
+        cell.stockSymbol.text = Array(portfolio.keys)[indexPath.row]
+        cell.stockCount.text = String(portfolio[Array(portfolio.keys)[indexPath.row]]!)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedSymbol = portfolio[indexPath[1]]
+        selectedSymbol = Array(portfolio.keys)[indexPath[1]]
         performSegue(withIdentifier: "portfolioToStockInfoSegue", sender: self)
    }
 }
