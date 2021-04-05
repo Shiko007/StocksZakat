@@ -27,19 +27,18 @@ class StockOverviewVC : UIViewController {
     
     @IBOutlet weak var longTermInvestmentLabel: UILabel!
     
-    @IBOutlet weak var AddOrRemoveButton: UIButton!
+    @IBOutlet weak var AddOrEditButton: UIButton!
     
-    @IBAction func AddorRemoveButtonPressed(_ sender: Any) {
+    @IBAction func AddorEditButtonPressed(_ sender: Any) {
         let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(self.stockDataAvailable == true){
             if(stockAlreadyInPortfolio == false){
-                updatePortfolioVC.portfolio.append(stockSymbol)
-                UserStocksCoreData().createStockItem(stockSymbol: stockSymbol, stockCount: 0)
-                self.dismiss(animated: true)
+                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
+                AddOrEditButton.isHidden = true
             }
             else{
                 UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
-                updatePortfolioVC.portfolio.remove(at: updatePortfolioVC.portfolio.firstIndex(of: stockSymbol)!)
+                updatePortfolioVC.portfolio.removeValue(forKey: stockSymbol)
                 self.dismiss(animated: true)
             }
         }
@@ -48,19 +47,25 @@ class StockOverviewVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        configureAddorRemoveButton()
         UpdateViewWithStockInfo()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let stockAddEditView = segue.destination as! StockAddEditVC
+        stockAddEditView.portfolioVC = portfolioVC
+        stockAddEditView.stockSymbol = stockSymbol
+        stockAddEditView.stockOverViewVC = self
     }
     
     func configureAddorRemoveButton(){
         let updatePortfolioVC = portfolioVC as! PortfolioVC
-        if(updatePortfolioVC.portfolio.contains(stockSymbol)){
-            AddOrRemoveButton.setTitle("Remove", for: .normal)
-            AddOrRemoveButton.backgroundColor = .red
+        if(updatePortfolioVC.portfolio[stockSymbol] != nil){
+            AddOrEditButton.setTitle("Remove", for: .normal)
+            AddOrEditButton.backgroundColor = #colorLiteral(red: 0.6750947833, green: 0, blue: 0, alpha: 1)
             stockAlreadyInPortfolio = true
         }else{
-            AddOrRemoveButton.setTitle("Add", for: .normal)
-            AddOrRemoveButton.backgroundColor = .green
+            AddOrEditButton.setTitle("Add", for: .normal)
+            AddOrEditButton.backgroundColor = #colorLiteral(red: 0, green: 0.5229981542, blue: 0, alpha: 1)
             stockAlreadyInPortfolio = false
         }
     }
@@ -86,6 +91,7 @@ class StockOverviewVC : UIViewController {
                     self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(balanceSheet[0].totalNonCurrentAssets!)
                     self.longTermInvestmentLabel.text = "Long Term Investments: " + String(balanceSheet[0].longTermInvestments!)
                     self.stockDataAvailable = true
+                    self.configureAddorRemoveButton()
                 }
                 else{
                     self.stockSymbolLabel.text = "Unavailable"
