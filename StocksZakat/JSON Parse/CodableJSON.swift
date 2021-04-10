@@ -66,3 +66,12 @@ struct stockSymbols : Codable {
     var symbol : String?
     var type : String?
 }
+
+struct stockPrice : Codable {
+    var c : Double?
+    var h : Double?
+    var l : Double?
+    var o : Double?
+    var pc : Double?
+    var t : Int?
+}

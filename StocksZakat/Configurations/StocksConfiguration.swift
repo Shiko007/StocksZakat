@@ -19,5 +19,6 @@ class StocksConfiguration {
     
     let symbolsAPIPrefix:String = "https://finnhub.io/api/v1/stock/symbol?"
     let symbolsAPIExchangeMarket:String = "exchange="
-    let symbolsAPIKey:String = "&token=" + GenericConfiguration().symbolsApiKey
+    let stockPriceAPIPrefix:String = "https://finnhub.io/api/v1/quote?symbol="
+    let tokenAPIKey:String = "&token=" + GenericConfiguration().finnhubApiKey
 }

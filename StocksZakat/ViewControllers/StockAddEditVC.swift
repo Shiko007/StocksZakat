@@ -39,6 +39,7 @@ class StockAddEditVC : UIViewController {
                 }
             }
             updatePortfolioVC.loadStoredUserStockItems()
+            stockOverView.youOwn.text = "You Own: " + String(stockNumber)
             stockOverView.AddOrEditButton.isHidden = false
             stockOverView.configureAddorRemoveButton()
             self.dismiss(animated: true)

@@ -25,22 +25,14 @@ class StockOverviewVC : UIViewController {
     
     @IBOutlet weak var totalNonCurrentAssetLabel: UILabel!
     
-    @IBOutlet weak var longTermInvestmentLabel: UILabel!
+    @IBOutlet weak var youOwn: UILabel!
     
     @IBOutlet weak var AddOrEditButton: UIButton!
     
     @IBAction func AddorEditButtonPressed(_ sender: Any) {
-//        let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(self.stockDataAvailable == true){
-            if(stockAlreadyInPortfolio == false){
-                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
-                AddOrEditButton.isHidden = true
-            }
-            else{
-                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
-                AddOrEditButton.isHidden = true
-//                UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
-            }
+            performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
+            AddOrEditButton.isHidden = true
         }
     }
     
@@ -76,15 +68,17 @@ class StockOverviewVC : UIViewController {
     }
     
     func UpdateViewWithStockInfo(){
+        let portfolioVCInstance = portfolioVC as! PortfolioVC
+        
         self.stockSymbolLabel.adjustsFontSizeToFitWidth = true
         self.reportedCurrencyLabel.adjustsFontSizeToFitWidth = true
         self.fillingDateLabel.adjustsFontSizeToFitWidth = true
         self.totalCurrentAssetLabel.adjustsFontSizeToFitWidth = true
         self.totalNonCurrentAssetLabel.adjustsFontSizeToFitWidth = true
-        self.longTermInvestmentLabel.adjustsFontSizeToFitWidth = true
+        self.youOwn.adjustsFontSizeToFitWidth = true
 
         balanceSheetNotAvailable = false
-        StocksData().getCompanyBalanceSheet(company: stockSymbol){ result in
+        StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self] result in
             switch result{
             case .success(let balanceSheet):
                 if(balanceSheet.isEmpty != true){
@@ -94,7 +88,7 @@ class StockOverviewVC : UIViewController {
                     self.fillingDateLabel.text = "Filling Date: " + balanceSheet[0].fillingDate!
                     self.totalCurrentAssetLabel.text = "Total Current Assets: " + String(balanceSheet[0].totalCurrentAssets!)
                     self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(balanceSheet[0].totalNonCurrentAssets!)
-                    self.longTermInvestmentLabel.text = "Long Term Investments: " + String(balanceSheet[0].longTermInvestments!)
+                    self.youOwn.text = "You Own: " + String(portfolioVCInstance.portfolio[stockSymbol] ?? 0)
                     self.stockDataAvailable = true
                     self.configureAddorRemoveButton()
                 }

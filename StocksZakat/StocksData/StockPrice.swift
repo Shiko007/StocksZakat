@@ -1,26 +1,26 @@
 //
-//  StocksSymbols.swift
+//  StockPrice.swift
 //  StocksZakat
 //
-//  Created by Sherif Yasser on 30.03.21.
+//  Created by Sherif Yasser on 10.04.21.
 //
 
 import Foundation
 
-class StocksSymbols{
+class StockPrice{
     enum NetworkError: Error {
         case badURL , requestFailed , unknown
     }
     
-    func getAllAvailableStocksSymbols(exchangeMarket: String , completion: @escaping (Result<[stockSymbols],NetworkError>) -> Void){
-        guard let apiURL = URL(string: StocksConfiguration().symbolsAPIPrefix + StocksConfiguration().symbolsAPIExchangeMarket + exchangeMarket + StocksConfiguration().tokenAPIKey) else {
+    func getStockPrice(stockSymbol: String , completion: @escaping (Result<stockPrice,NetworkError>) -> Void){
+        guard let apiURL = URL(string: StocksConfiguration().stockPriceAPIPrefix + stockSymbol + StocksConfiguration().tokenAPIKey) else {
             completion(.failure(.badURL))
             return
         }
         URLSession.shared.dataTask(with: apiURL){ data , response , error in
             DispatchQueue.main.async {
                 if let data = data{
-                    completion(.success(JSONParser().parseSymbolList(data: data)!))
+                    completion(.success(JSONParser().parseStockPrice(data: data)!))
                 } else if error != nil{
                     completion(.failure(.requestFailed))
                 }

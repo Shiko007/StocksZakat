@@ -8,11 +8,10 @@
 import UIKit
 
 class PortfolioVC : UIViewController {
-    
     var userStocksCoreDataItems : [UserStocksItem] = []
     var portfolio : [String:Double] = [:]{
         didSet{
-            userPortfolioTable.reloadData()
+            handlePortfolioUpdate()
         }
     }
     var availableStocksSymbols : [String] = []
@@ -31,6 +30,14 @@ class PortfolioVC : UIViewController {
         for userStockItem in userStocksCoreDataItems{
             portfolio[userStockItem.stockSymbol] = userStockItem.stocksCount
         }
+    }
+    
+    func handlePortfolioUpdate(){
+        let zakatVC = self.tabBarController?.viewControllers![1].children[0] as! ZakatVC
+        if(userPortfolioTable != nil){
+            userPortfolioTable.reloadData()
+        }
+        zakatVC.portfolio = portfolio
     }
     
     func handleDeleteSwipe(){
