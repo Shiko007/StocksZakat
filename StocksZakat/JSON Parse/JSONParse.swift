@@ -34,11 +34,11 @@ class JSONParser {
         return jsonData
     }
     
-    func parseStockPrice(data : Data?) -> stockPrice?{
-        var jsonData:stockPrice?
+    func parseStocksInfo(data : Data?) -> stockInfoResponse?{
+        var jsonData:stockInfoResponse?
         let decoder = JSONDecoder()
         do{
-            jsonData = try decoder.decode(stockPrice.self, from: data!)
+            jsonData = try decoder.decode(stockInfoResponse.self, from: data!)
             return jsonData
         }
         catch{

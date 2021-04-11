@@ -12,42 +12,30 @@ class ZakatVC : UIViewController {
 
     @IBOutlet weak var zakatTable: UITableView!
     var isViewLoadedAlready : Bool = false
-    var portfolio : [String:Double] = [:]{
+    var portfolio : [String:stockData] = [:]{
         didSet{
             if(isViewLoadedAlready == true){
-                updateNewStockPrice()
+                updateNewStockData()
             }
             if(zakatTable != nil){
                 zakatTable.reloadData()
             }
         }
     }
-    var portfolioPrices : [String:Double] = [:]{
-        didSet{
-            if(zakatTable != nil){
-                zakatTable.reloadData()
-            }
-        }
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
         isViewLoadedAlready = true
-        loadPortfolioStocksPrices()
     }
     
-    func loadPortfolioStocksPrices(){
-        for key in Array(portfolio.keys){
-            loadStockPrice(stockSymbol: String(key))
-        }
-    }
-    
-    func loadStockPrice(stockSymbol : String){
-        StockPrice().getStockPrice(stockSymbol: stockSymbol){ [self] result in
+    func loadStockData(stockSymbol : String){
+        StocksData().getStockInfo(stocksSymbols: stockSymbol){ [self] result in
             switch result{
             case .success(let stockPrice):
-                portfolioPrices[stockSymbol] = stockPrice.c ?? 0
+                portfolio[stockSymbol]?.marketCap = stockPrice.quoteResponse.result![0].marketCap!
+                portfolio[stockSymbol]?.price = stockPrice.quoteResponse.result![0].regularMarketPrice!
             case .failure(let error):
                 switch error {
                 case .badURL:
@@ -61,10 +49,10 @@ class ZakatVC : UIViewController {
         }
     }
     
-    func updateNewStockPrice(){
-        for key in Array(portfolio.keys){
-            if(portfolioPrices[key] == nil){
-                loadStockPrice(stockSymbol: String(key))
+    func updateNewStockData(){
+        for (stock,_) in portfolio {
+            if(portfolio[stock] == nil){
+                loadStockData(stockSymbol: stock)
             }
         }
     }
@@ -78,11 +66,13 @@ extension ZakatVC : UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioZakatTableReuseIdentifier") as! ZakatTableCell
         let portfolioKey = Array(portfolio.keys)[indexPath.row]
+        let userOwnedStocks = portfolio[portfolioKey]?.userOwned ?? 0
+        let marketCap = portfolio[portfolioKey]?.marketCap ?? 0
+        let stockPrice = portfolio[portfolioKey]?.price ?? 0
         cell.stockSymbolLabel.text = String(portfolioKey)
-        cell.youOwnLabel.text = String(portfolio[portfolioKey]!)
-        if let stockPrice = portfolioPrices[portfolioKey]{
-            cell.stockPriceLabel.text = String(stockPrice)
-        }
+        cell.youOwnLabel.text = String(userOwnedStocks)
+        cell.zakatPerStockLabel.text = String(marketCap)
+        cell.stockPriceLabel.text = String(stockPrice)
         return cell
    }
 }

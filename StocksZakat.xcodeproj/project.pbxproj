@@ -18,14 +18,12 @@
 		3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A32610B0D2009B597B /* ZakatVC.swift */; };
 		3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A62610B0F2009B597B /* TotalVC.swift */; };
 		3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A92610B10F009B597B /* SettingsVC.swift */; };
-		37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B1F26137D6800EFED88 /* StocksSymbols.swift */; };
 		37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B22261390DD00EFED88 /* LaunchVC.swift */; };
 		378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */; };
 		378E786A26192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */; };
 		37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */; };
 		37AA49942619264C0093821D /* userStocksItems.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37AA49922619264C0093821D /* userStocksItems.xcdatamodeld */; };
 		37AA49CA261929500093821D /* UserStocksCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA49C9261929500093821D /* UserStocksCoreData.swift */; };
-		37AEC0552621F5DA0066DD5D /* StockPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AEC0542621F5DA0066DD5D /* StockPrice.swift */; };
 		37C68349261B557A00819262 /* PortfolioTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C68348261B557A00819262 /* PortfolioTableCell.swift */; };
 		37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA202610B38800E85A0C /* AddStocksVC.swift */; };
 		37DDBA272610BF9400E85A0C /* StocksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DDBA262610BF9400E85A0C /* StocksData.swift */; };
@@ -51,14 +49,12 @@
 		3746C8A32610B0D2009B597B /* ZakatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZakatVC.swift; sourceTree = "<group>"; };
 		3746C8A62610B0F2009B597B /* TotalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalVC.swift; sourceTree = "<group>"; };
 		3746C8A92610B10F009B597B /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		37874B1F26137D6800EFED88 /* StocksSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksSymbols.swift; sourceTree = "<group>"; };
 		37874B22261390DD00EFED88 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37A2920F2615019D00F2F0E9 /* StockOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockOverviewVC.swift; sourceTree = "<group>"; };
 		37AA49932619264C0093821D /* userStocksItems.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = userStocksItems.xcdatamodel; sourceTree = "<group>"; };
 		37AA49C9261929500093821D /* UserStocksCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStocksCoreData.swift; sourceTree = "<group>"; };
-		37AEC0542621F5DA0066DD5D /* StockPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPrice.swift; sourceTree = "<group>"; };
 		37C68348261B557A00819262 /* PortfolioTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioTableCell.swift; sourceTree = "<group>"; };
 		37DDBA202610B38800E85A0C /* AddStocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStocksVC.swift; sourceTree = "<group>"; };
 		37DDBA262610BF9400E85A0C /* StocksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksData.swift; sourceTree = "<group>"; };
@@ -164,8 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				37DDBA262610BF9400E85A0C /* StocksData.swift */,
-				37874B1F26137D6800EFED88 /* StocksSymbols.swift */,
-				37AEC0542621F5DA0066DD5D /* StockPrice.swift */,
 			);
 			path = StocksData;
 			sourceTree = "<group>";
@@ -269,11 +263,9 @@
 			files = (
 				37DDBA272610BF9400E85A0C /* StocksData.swift in Sources */,
 				37EDADDD2612405900AD2483 /* StocksConfiguration.swift in Sources */,
-				37AEC0552621F5DA0066DD5D /* StockPrice.swift in Sources */,
 				378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */,
 				3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */,
 				37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */,
-				37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */,
 				37EDADED2612480600AD2483 /* JSONParse.swift in Sources */,
 				37EDADE72612448B00AD2483 /* CodableJSON.swift in Sources */,
 				37FDDCD8261A74DC002D8F15 /* KeyboardExtension.swift in Sources */,

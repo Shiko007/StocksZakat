@@ -15,6 +15,7 @@ class StockAddEditVC : UIViewController {
     var stockSymbol: String = ""
     var isEditingStock : Bool = false
     var inEditingStockItem : UserStocksItem?
+    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0)
     
     @IBOutlet weak var numberOfStocksField: UITextField! {
         didSet{
@@ -30,7 +31,7 @@ class StockAddEditVC : UIViewController {
         if(stockNumber != 0){
             let updatePortfolioVC = portfolioVC as! PortfolioVC
             let stockOverView = self.stockOverViewVC as! StockOverviewVC
-            updatePortfolioVC.portfolio[stockSymbol] = stockNumber
+            updatePortfolioVC.portfolio[stockSymbol]?.userOwned = stockNumber
             if(isEditingStock != true){
                 UserStocksCoreData().createStockItem(stockSymbol: stockSymbol, stockCount: stockNumber)
             }else{
@@ -42,6 +43,8 @@ class StockAddEditVC : UIViewController {
             stockOverView.youOwn.text = "You Own: " + String(stockNumber)
             stockOverView.AddOrEditButton.isHidden = false
             stockOverView.configureAddorRemoveButton()
+            stockDataInst.userOwned = stockNumber
+            updatePortfolioVC.portfolio[stockSymbol] = stockDataInst
             self.dismiss(animated: true)
         }
     }
