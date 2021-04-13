@@ -14,6 +14,7 @@ class StockOverviewVC : UIViewController {
     var balanceSheetNotAvailable: Bool = false
     var portfolioVC : UIViewController?
     var stockAlreadyInPortfolio : Bool = true
+    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0, zakatPerStock: 0)
     
     @IBOutlet weak var stockSymbolLabel: UILabel!
     
@@ -25,29 +26,21 @@ class StockOverviewVC : UIViewController {
     
     @IBOutlet weak var totalNonCurrentAssetLabel: UILabel!
     
-    @IBOutlet weak var longTermInvestmentLabel: UILabel!
+    @IBOutlet weak var youOwn: UILabel!
     
     @IBOutlet weak var AddOrEditButton: UIButton!
     
     @IBAction func AddorEditButtonPressed(_ sender: Any) {
-//        let updatePortfolioVC = portfolioVC as! PortfolioVC
         if(self.stockDataAvailable == true){
-            if(stockAlreadyInPortfolio == false){
-                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
-                AddOrEditButton.isHidden = true
-            }
-            else{
-                performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
-                AddOrEditButton.isHidden = true
-//                UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: stockSymbol))
-            }
+            performSegue(withIdentifier: "stockOverviewtoAddorEdit", sender: self)
+            AddOrEditButton.isHidden = true
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        UpdateViewWithStockInfo()
+        UpdateAndDisplayStockInfo()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,6 +49,7 @@ class StockOverviewVC : UIViewController {
         stockAddEditView.stockSymbol = stockSymbol
         stockAddEditView.stockOverViewVC = self
         stockAddEditView.isEditingStock = stockAlreadyInPortfolio
+        stockAddEditView.stockDataInst = stockDataInst
         if(stockAlreadyInPortfolio == true){
             let portfolioVCInstance = portfolioVC as! PortfolioVC
             stockAddEditView.inEditingStockItem = portfolioVCInstance.matchStockItemWith(stockSymbol: stockSymbol)
@@ -75,26 +69,33 @@ class StockOverviewVC : UIViewController {
         }
     }
     
-    func UpdateViewWithStockInfo(){
+    func UpdateAndDisplayStockInfo(){
+        let portfolioVCInstance = portfolioVC as! PortfolioVC
         self.stockSymbolLabel.adjustsFontSizeToFitWidth = true
         self.reportedCurrencyLabel.adjustsFontSizeToFitWidth = true
         self.fillingDateLabel.adjustsFontSizeToFitWidth = true
         self.totalCurrentAssetLabel.adjustsFontSizeToFitWidth = true
         self.totalNonCurrentAssetLabel.adjustsFontSizeToFitWidth = true
-        self.longTermInvestmentLabel.adjustsFontSizeToFitWidth = true
+        self.youOwn.adjustsFontSizeToFitWidth = true
 
         balanceSheetNotAvailable = false
-        StocksData().getCompanyBalanceSheet(company: stockSymbol){ result in
+        StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self] result in
             switch result{
             case .success(let balanceSheet):
                 if(balanceSheet.isEmpty != true){
                     self.balanceSheetInfo = balanceSheet[0]
                     self.stockSymbolLabel.text = balanceSheet[0].symbol
+                    self.stockDataInst.symbol = balanceSheet[0].symbol!
                     self.reportedCurrencyLabel.text = "Report Currency: " + balanceSheet[0].reportedCurrency!
+                    self.stockDataInst.currency = balanceSheet[0].reportedCurrency!
                     self.fillingDateLabel.text = "Filling Date: " + balanceSheet[0].fillingDate!
+                    self.stockDataInst.balanceSheetFillingDate = balanceSheet[0].fillingDate!
                     self.totalCurrentAssetLabel.text = "Total Current Assets: " + String(balanceSheet[0].totalCurrentAssets!)
+                    self.stockDataInst.totalCurrentAssets = balanceSheet[0].totalCurrentAssets!
                     self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(balanceSheet[0].totalNonCurrentAssets!)
-                    self.longTermInvestmentLabel.text = "Long Term Investments: " + String(balanceSheet[0].longTermInvestments!)
+                    self.stockDataInst.totalNonCurrentAssets = balanceSheet[0].totalNonCurrentAssets!
+                    self.youOwn.text = "You Own: " + String(portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0)
+                    self.stockDataInst.userOwned = portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0
                     self.stockDataAvailable = true
                     self.configureAddorRemoveButton()
                 }

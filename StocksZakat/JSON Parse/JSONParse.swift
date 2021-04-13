@@ -33,4 +33,17 @@ class JSONParser {
         }
         return jsonData
     }
+    
+    func parseStocksInfo(data : Data?) -> stockInfoResponse?{
+        var jsonData:stockInfoResponse?
+        let decoder = JSONDecoder()
+        do{
+            jsonData = try decoder.decode(stockInfoResponse.self, from: data!)
+            return jsonData
+        }
+        catch{
+            print("Error While Reading and Parsing Stock Price JSON")
+        }
+        return jsonData
+    }
 }

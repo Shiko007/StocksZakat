@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		370B9A87261A0F3300E3AC4E /* StockAddEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370B9A86261A0F3300E3AC4E /* StockAddEditVC.swift */; };
+		372B708D2621EA1B00F243F5 /* ZakatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B708C2621EA1B00F243F5 /* ZakatTableCell.swift */; };
 		3746C8872610AA65009B597B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8862610AA65009B597B /* AppDelegate.swift */; };
 		3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8882610AA65009B597B /* SceneDelegate.swift */; };
 		3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C88A2610AA65009B597B /* PortfolioVC.swift */; };
@@ -17,7 +18,6 @@
 		3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A32610B0D2009B597B /* ZakatVC.swift */; };
 		3746C8A72610B0F2009B597B /* TotalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A62610B0F2009B597B /* TotalVC.swift */; };
 		3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8A92610B10F009B597B /* SettingsVC.swift */; };
-		37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B1F26137D6800EFED88 /* StocksSymbols.swift */; };
 		37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37874B22261390DD00EFED88 /* LaunchVC.swift */; };
 		378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */; };
 		378E786A26192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */; };
@@ -37,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		370B9A86261A0F3300E3AC4E /* StockAddEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAddEditVC.swift; sourceTree = "<group>"; };
+		372B708C2621EA1B00F243F5 /* ZakatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZakatTableCell.swift; sourceTree = "<group>"; };
 		3746C8832610AA65009B597B /* StocksZakat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksZakat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3746C8862610AA65009B597B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3746C8882610AA65009B597B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		3746C8A32610B0D2009B597B /* ZakatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZakatVC.swift; sourceTree = "<group>"; };
 		3746C8A62610B0F2009B597B /* TotalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalVC.swift; sourceTree = "<group>"; };
 		3746C8A92610B10F009B597B /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		37874B1F26137D6800EFED88 /* StocksSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksSymbols.swift; sourceTree = "<group>"; };
 		37874B22261390DD00EFED88 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		378E786726192CFD000D71AF /* UserStocksItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		378E786826192CFD000D71AF /* UserStocksItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserStocksItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -77,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		372B708B2621E9FF00F243F5 /* ZakatView */ = {
+			isa = PBXGroup;
+			children = (
+				3746C8A32610B0D2009B597B /* ZakatVC.swift */,
+				372B708C2621EA1B00F243F5 /* ZakatTableCell.swift */,
+			);
+			path = ZakatView;
+			sourceTree = "<group>";
+		};
 		3746C87A2610AA65009B597B = {
 			isa = PBXGroup;
 			children = (
@@ -96,11 +105,12 @@
 		3746C8852610AA65009B597B /* StocksZakat */ = {
 			isa = PBXGroup;
 			children = (
-				37FDDCD6261A74C6002D8F15 /* Extensions */,
-				378907A32619E84E00955FE7 /* PortfolioView */,
+				37EDADDF261242FC00AD2483 /* Configurations */,
 				37AA4996261926520093821D /* UserStocksCoreDataItems */,
 				37EDADE52612446600AD2483 /* JSON Parse */,
-				37EDADDF261242FC00AD2483 /* Configurations */,
+				37FDDCD6261A74C6002D8F15 /* Extensions */,
+				372B708B2621E9FF00F243F5 /* ZakatView */,
+				378907A32619E84E00955FE7 /* PortfolioView */,
 				37DDBA252610BF7F00E85A0C /* StocksData */,
 				3746C89C2610B050009B597B /* ViewControllers */,
 				3746C8862610AA65009B597B /* AppDelegate.swift */,
@@ -117,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				37874B22261390DD00EFED88 /* LaunchVC.swift */,
-				3746C8A32610B0D2009B597B /* ZakatVC.swift */,
 				3746C8A62610B0F2009B597B /* TotalVC.swift */,
 				3746C8A92610B10F009B597B /* SettingsVC.swift */,
 				37DDBA202610B38800E85A0C /* AddStocksVC.swift */,
@@ -151,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				37DDBA262610BF9400E85A0C /* StocksData.swift */,
-				37874B1F26137D6800EFED88 /* StocksSymbols.swift */,
 			);
 			path = StocksData;
 			sourceTree = "<group>";
@@ -258,11 +266,11 @@
 				378E786926192CFD000D71AF /* UserStocksItem+CoreDataClass.swift in Sources */,
 				3746C8AA2610B10F009B597B /* SettingsVC.swift in Sources */,
 				37874B23261390DD00EFED88 /* LaunchVC.swift in Sources */,
-				37874B2026137D6800EFED88 /* StocksSymbols.swift in Sources */,
 				37EDADED2612480600AD2483 /* JSONParse.swift in Sources */,
 				37EDADE72612448B00AD2483 /* CodableJSON.swift in Sources */,
 				37FDDCD8261A74DC002D8F15 /* KeyboardExtension.swift in Sources */,
 				37DDBA212610B38800E85A0C /* AddStocksVC.swift in Sources */,
+				372B708D2621EA1B00F243F5 /* ZakatTableCell.swift in Sources */,
 				3746C8A42610B0D2009B597B /* ZakatVC.swift in Sources */,
 				37A292102615019D00F2F0E9 /* StockOverviewVC.swift in Sources */,
 				37C68349261B557A00819262 /* PortfolioTableCell.swift in Sources */,

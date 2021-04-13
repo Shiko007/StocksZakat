@@ -8,11 +8,10 @@
 import UIKit
 
 class PortfolioVC : UIViewController {
-    
     var userStocksCoreDataItems : [UserStocksItem] = []
-    var portfolio : [String:Double] = [:]{
+    var portfolio : [String:stockData] = [:]{
         didSet{
-            userPortfolioTable.reloadData()
+            handlePortfolioUpdate()
         }
     }
     var availableStocksSymbols : [String] = []
@@ -23,18 +22,18 @@ class PortfolioVC : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        loadStoredUserStockItems()
     }
     
-    func loadStoredUserStockItems(){
-        userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
-        for userStockItem in userStocksCoreDataItems{
-            portfolio[userStockItem.stockSymbol] = userStockItem.stocksCount
+    func handlePortfolioUpdate(){
+        let zakatVC = self.tabBarController?.viewControllers![1].children[0] as! ZakatVC
+        if(userPortfolioTable != nil){
+            userPortfolioTable.reloadData()
         }
+        zakatVC.portfolio = portfolio
     }
     
     func handleDeleteSwipe(){
-        UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: selectedSymbol))
+        UserStocksCoreData().deleteStockItem(item:matchStockItemWith(stockSymbol: selectedSymbol))
         portfolio.removeValue(forKey: selectedSymbol)
     }
     
@@ -47,6 +46,16 @@ class PortfolioVC : UIViewController {
             }
         }
         return matchedStockItem!
+    }
+    
+    func loadStoredUserStockItems(){
+        var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0,zakatPerStock : 0)
+        userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
+        for userStockItem in userStocksCoreDataItems{
+            stockDataInst.symbol = userStockItem.stockSymbol
+            stockDataInst.userOwned = userStockItem.stocksCount
+            portfolio[userStockItem.stockSymbol] = stockDataInst
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,7 +82,7 @@ extension PortfolioVC: UITableViewDataSource, UITableViewDelegate {
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioTableReuseIdentifier") as! PortfolioTableCell
         cell.stockSymbol.text = Array(portfolio.keys)[indexPath.row]
-        cell.stockCount.text = String(portfolio[Array(portfolio.keys)[indexPath.row]]!)
+        cell.stockCount.text = String(portfolio[Array(portfolio.keys)[indexPath.row]]!.userOwned)
         return cell
     }
     
