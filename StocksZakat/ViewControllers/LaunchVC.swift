@@ -124,7 +124,7 @@ class LaunchVC : UIViewController {
     }
     
     func loadStoredUserStockItems(){
-        var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0)
+        var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0, zakatPerStock: 0)
         userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
         for userStockItem in userStocksCoreDataItems{
             stockDataInst.symbol = userStockItem.stockSymbol
@@ -155,6 +155,7 @@ class LaunchVC : UIViewController {
                     stockDataInst.currency = stockData.quoteResponse.result?[0].financialCurrency ?? ""
                     stockDataInst.marketCap = stockData.quoteResponse.result?[0].marketCap ?? 0
                     stockDataInst.price = stockData.quoteResponse.result?[0].regularMarketPrice ?? 0
+                    stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
                     portfolio[stockSymbol] = stockDataInst
                 case .failure(let error):
                     switch error {

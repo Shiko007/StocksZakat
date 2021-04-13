@@ -12,7 +12,6 @@ class PortfolioVC : UIViewController {
     var portfolio : [String:stockData] = [:]{
         didSet{
             handlePortfolioUpdate()
-            print(portfolio)
         }
     }
     var availableStocksSymbols : [String] = []
@@ -34,7 +33,7 @@ class PortfolioVC : UIViewController {
     }
     
     func handleDeleteSwipe(){
-        UserStocksCoreData().deleteStockItem(item: matchStockItemWith(stockSymbol: selectedSymbol))
+        UserStocksCoreData().deleteStockItem(item:matchStockItemWith(stockSymbol: selectedSymbol))
         portfolio.removeValue(forKey: selectedSymbol)
     }
     
@@ -50,7 +49,7 @@ class PortfolioVC : UIViewController {
     }
     
     func loadStoredUserStockItems(){
-        var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0)
+        var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0,zakatPerStock : 0)
         userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
         for userStockItem in userStocksCoreDataItems{
             stockDataInst.symbol = userStockItem.stockSymbol

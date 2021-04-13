@@ -34,8 +34,11 @@ class ZakatVC : UIViewController {
         StocksData().getStockInfo(stocksSymbols: stockSymbol){ [self] result in
             switch result{
             case .success(let stockPrice):
+                var zakatableAssets : Double = 0
                 portfolio[stockSymbol]?.marketCap = stockPrice.quoteResponse.result![0].marketCap!
                 portfolio[stockSymbol]?.price = stockPrice.quoteResponse.result![0].regularMarketPrice!
+                zakatableAssets = Double(portfolio[stockSymbol]!.marketCap - portfolio[stockSymbol]!.totalNonCurrentAssets)
+                portfolio[stockSymbol]?.zakatPerStock = round(Double((zakatableAssets / Double(portfolio[stockSymbol]!.marketCap)) * 100) * 1000) / 1000
             case .failure(let error):
                 switch error {
                 case .badURL:
@@ -50,8 +53,9 @@ class ZakatVC : UIViewController {
     }
     
     func updateNewStockData(){
+
         for (stock,_) in portfolio {
-            if(portfolio[stock] == nil){
+            if(portfolio[stock] != nil && portfolio[stock]?.price == 0){
                 loadStockData(stockSymbol: stock)
             }
         }
@@ -67,11 +71,12 @@ extension ZakatVC : UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "userPortfolioZakatTableReuseIdentifier") as! ZakatTableCell
         let portfolioKey = Array(portfolio.keys)[indexPath.row]
         let userOwnedStocks = portfolio[portfolioKey]?.userOwned ?? 0
-        let marketCap = portfolio[portfolioKey]?.marketCap ?? 0
+        let zakatPerStock = portfolio[portfolioKey]?.zakatPerStock ?? 0
         let stockPrice = portfolio[portfolioKey]?.price ?? 0
         cell.stockSymbolLabel.text = String(portfolioKey)
         cell.youOwnLabel.text = String(userOwnedStocks)
-        cell.zakatPerStockLabel.text = String(marketCap)
+        cell.zakatPerStockLabel.text = String(zakatPerStock) + "%"
+        cell.userZakatLabel.text = String(Int(round((zakatPerStock / 100) * (userOwnedStocks * stockPrice))))
         cell.stockPriceLabel.text = String(stockPrice)
         return cell
    }

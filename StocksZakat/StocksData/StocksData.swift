@@ -16,6 +16,7 @@ struct stockData {
     var balanceSheetFillingDate : String = ""
     var totalCurrentAssets : Int = 0
     var totalNonCurrentAssets : Int = 0
+    var zakatPerStock : Double = 0
 }
 
 class StocksData {

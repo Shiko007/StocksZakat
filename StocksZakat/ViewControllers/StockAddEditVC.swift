@@ -15,7 +15,7 @@ class StockAddEditVC : UIViewController {
     var stockSymbol: String = ""
     var isEditingStock : Bool = false
     var inEditingStockItem : UserStocksItem?
-    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0)
+    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0, zakatPerStock: 0)
     
     @IBOutlet weak var numberOfStocksField: UITextField! {
         didSet{
@@ -37,6 +37,7 @@ class StockAddEditVC : UIViewController {
             }else{
                 if let updateStockItem = inEditingStockItem{
                     UserStocksCoreData().updateItem(item: updateStockItem, stockCount: stockNumber)
+                    
                 }
             }
             updatePortfolioVC.loadStoredUserStockItems()

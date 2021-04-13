@@ -14,7 +14,7 @@ class StockOverviewVC : UIViewController {
     var balanceSheetNotAvailable: Bool = false
     var portfolioVC : UIViewController?
     var stockAlreadyInPortfolio : Bool = true
-    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0)
+    var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0, zakatPerStock: 0)
     
     @IBOutlet weak var stockSymbolLabel: UILabel!
     
