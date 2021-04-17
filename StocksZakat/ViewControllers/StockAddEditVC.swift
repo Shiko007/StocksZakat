@@ -37,7 +37,6 @@ class StockAddEditVC : UIViewController {
             }else{
                 if let updateStockItem = inEditingStockItem{
                     UserStocksCoreData().updateItem(item: updateStockItem, stockCount: stockNumber)
-                    
                 }
             }
             updatePortfolioVC.loadStoredUserStockItems()

@@ -7,54 +7,45 @@
 
 import Foundation
 
-struct balanceSheetElements : Codable {
-    var date:String?
-    var symbol:String?
-    var reportedCurrency:String?
-    var fillingDate:String?
-    var acceptedDate:String?
-    var period:String?
-    var cashAndCashEquivalents:Int?
-    var shortTermInvestments:Int?
-    var cashAndShortTermInvestments:Int?
-    var netReceivables:Int?
-    var inventory:Int?
-    var otherCurrentAssets:Int?
-    var totalCurrentAssets:Int?
-    var propertyPlantEquipmentNet:Int?
-    var goodwill:Double?
-    var intangibleAssets:Double?
-    var goodwillAndIntangibleAssets:Double?
-    var longTermInvestments:Int?
-    var taxAssets:Double?
-    var otherNonCurrentAssets:Int?
-    var totalNonCurrentAssets:Int?
-    var otherAssets:Double?
-    var totalAssets:Int?
-    var accountPayables:Int?
-    var shortTermDebt:Int?
-    var taxPayables:Double?
-    var deferredRevenue:Int?
-    var otherCurrentLiabilities:Int?
-    var totalCurrentLiabilities:Int?
-    var longTermDebt:Int?
-    var deferredRevenueNonCurrent:Double?
-    var deferredTaxLiabilitiesNonCurrent:Double?
-    var otherNonCurrentLiabilities:Int?
-    var totalNonCurrentLiabilities:Int?
-    var otherLiabilities:Double?
-    var totalLiabilities:Int?
-    var commonStock:Int?
-    var retainedEarnings:Int?
-    var accumulatedOtherComprehensiveIncomeLoss:Int?
-    var othertotalStockholdersEquity:Double?
-    var totalStockholdersEquity:Int?
-    var totalLiabilitiesAndStockholdersEquity:Int?
-    var totalInvestments:Int?
-    var totalDebt:Int?
-    var netDebt:Int?
-    var link:String?
-    var finalLink:String?
+struct balanceSheetContext : Codable{
+    var context : balanceSeetDispatcher?
+}
+struct balanceSeetDispatcher : Codable{
+    var dispatcher : balanceSheetStores?
+}
+struct balanceSheetStores : Codable{
+    var stores : balanceSheetStore?
+}
+struct balanceSheetStore : Codable{
+    var PageStore : balanceSheetPageStore?
+    var QuoteSummaryStore : BalanceSheetSummeryStore?
+}
+struct balanceSheetPageStore : Codable{
+    var pageData : balanceSheetPageData
+}
+struct balanceSheetPageData : Codable{
+    var symbol : String?
+}
+struct BalanceSheetSummeryStore : Codable{
+    var balanceSheetHistoryQuarterly : balanceSheetQuarterly?
+    var earnings : balanceSheetEarnings?
+}
+struct balanceSheetEarnings : Codable{
+    var maxAge : Int?
+    var financialCurrency : String?
+}
+struct balanceSheetQuarterly : Codable{
+    var balanceSheetStatements : [balanceSheetStatment]?
+    var maxAge : Int?
+}
+struct balanceSheetStatment : Codable{
+    var totalAssets : balanceSheetAtomic?
+    var endDate : balanceSheetAtomic?
+    var totalCurrentAssets : balanceSheetAtomic?
+}
+struct balanceSheetAtomic : Codable{
+    var raw : Int?
+    var fmt : String?
 }
 
 struct stockSymbols : Codable {

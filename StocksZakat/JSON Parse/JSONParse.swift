@@ -8,11 +8,11 @@
 import Foundation
 
 class JSONParser {
-    func parseBalanceSheet(data : Data?) -> [balanceSheetElements]?{
-        var jsonData:[balanceSheetElements]?
+    func parseBalanceSheet(data : String?) -> balanceSheetContext?{
+        var jsonData:balanceSheetContext?
         let decoder = JSONDecoder()
         do {
-            jsonData = try decoder.decode([balanceSheetElements].self, from: data!)
+            jsonData = try decoder.decode(balanceSheetContext.self, from: Data(String(data!).utf8))
             return jsonData
         }
         catch{
