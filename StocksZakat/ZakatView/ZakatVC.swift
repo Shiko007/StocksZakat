@@ -9,14 +9,30 @@ import UIKit
 
 class ZakatVC : UIViewController {
 
-
+    
     @IBOutlet weak var zakatTable: UITableView!
-    var isViewLoadedAlready : Bool = false
-    var portfolio : [String:stockData] = [:]{
+    var isViewAlreadyLoaded : Bool = false
+    var updatingStocksData : Bool = false
+    var loadedBalanceSheetsCounter = 0 {
         didSet{
-            if(isViewLoadedAlready == true){
+            if(loadedBalanceSheetsCounter == portfolio.count){
                 updateNewStockData()
             }
+        }
+    }
+    var loadedStocksDataCounter = 0{
+        didSet{
+            if(loadedStocksDataCounter == portfolio.count){
+                loadedBalanceSheetsCounter = 0
+                loadedStocksDataCounter = 0
+                if(zakatTable != nil){
+                    zakatTable.reloadData()
+                }
+            }
+        }
+    }
+    var portfolio : [String:stockData] = [:]{
+        didSet{
             if(zakatTable != nil){
                 zakatTable.reloadData()
             }
@@ -27,7 +43,7 @@ class ZakatVC : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        isViewLoadedAlready = true
+        isViewAlreadyLoaded = true
     }
     
     func loadStockData(stockSymbol : String){
@@ -35,10 +51,13 @@ class ZakatVC : UIViewController {
             switch result{
             case .success(let stockPrice):
                 var zakatableAssets : Double = 0
+                var zakatPerStock : Double = 0
                 portfolio[stockSymbol]?.marketCap = stockPrice.quoteResponse.result![0].marketCap!
                 portfolio[stockSymbol]?.price = stockPrice.quoteResponse.result![0].regularMarketPrice!
                 zakatableAssets = Double(portfolio[stockSymbol]!.marketCap - portfolio[stockSymbol]!.totalNonCurrentAssets)
-                portfolio[stockSymbol]?.zakatPerStock = round(Double((zakatableAssets / Double(portfolio[stockSymbol]!.marketCap)) * 100) * 1000) / 1000
+                zakatPerStock = round(Double((zakatableAssets / Double(portfolio[stockSymbol]!.marketCap)) * 100) * 1000) / 1000
+                portfolio[stockSymbol]?.zakatPerStock = zakatPerStock
+                loadedStocksDataCounter += 1
             case .failure(let error):
                 switch error {
                 case .badURL:
@@ -52,10 +71,40 @@ class ZakatVC : UIViewController {
         }
     }
     
-    func updateNewStockData(){
-
+    func loadBalanceSheet(stockSymbol : String){
+        if var stockDataInst = portfolio[stockSymbol]{
+            StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self]result in
+                switch result{
+                case .success(let stockData):
+                    let balanceSheetData = stockData.context?.dispatcher?.stores?.QuoteSummaryStore?.balanceSheetHistoryQuarterly?.balanceSheetStatements?[0]
+                    stockDataInst.balanceSheetFillingDate = balanceSheetData?.endDate?.fmt ?? ""
+                    stockDataInst.totalCurrentAssets = balanceSheetData?.totalCurrentAssets?.raw ?? 0
+                    stockDataInst.totalNonCurrentAssets = (((balanceSheetData?.totalAssets?.raw) ?? 0) - ((balanceSheetData?.totalCurrentAssets?.raw) ?? 0))
+                    self.portfolio[stockSymbol] = stockDataInst
+                    self.loadedBalanceSheetsCounter += 1
+                case .failure(let error):
+                    switch error {
+                    case .badURL:
+                        print("Bad URL!")
+                    case .requestFailed:
+                        print("Request Failed!")
+                    case .unknown:
+                        print("Uknown Error!")
+                    }
+                }
+            }
+        }
+    }
+    func updateBalanceSheetData(){
         for (stock,_) in portfolio {
-            if(portfolio[stock] != nil && portfolio[stock]?.price == 0){
+            if(portfolio[stock] != nil){
+                loadBalanceSheet(stockSymbol: stock)
+            }
+        }
+    }
+    func updateNewStockData(){
+        for (stock,_) in portfolio {
+            if(portfolio[stock] != nil){
                 loadStockData(stockSymbol: stock)
             }
         }

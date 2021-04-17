@@ -143,7 +143,6 @@ class LaunchVC : UIViewController {
     func loadPortfolioStocksData(){
         for (stock,_) in portfolio{
             loadStockData(stockSymbol: stock)
-            loadedStockDataCounter += 1
         }
     }
     
@@ -157,6 +156,7 @@ class LaunchVC : UIViewController {
                     stockDataInst.price = stockData.quoteResponse.result?[0].regularMarketPrice ?? 0
                     stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
                     portfolio[stockSymbol] = stockDataInst
+                    loadedStockDataCounter += 1
                 case .failure(let error):
                     switch error {
                     case .badURL:
@@ -173,15 +173,14 @@ class LaunchVC : UIViewController {
     
     func loadBalanceSheet(stockSymbol : String){
         if var stockDataInst = portfolio[stockSymbol]{
-            StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self]result in
+            StocksData().getCompanyBalanceSheet(company: stockSymbol){result in
                 switch result{
-                case .success(let balanceSheet):
-                    if(balanceSheet.isEmpty != true){
-                        stockDataInst.balanceSheetFillingDate = balanceSheet[0].fillingDate ?? ""
-                        stockDataInst.totalCurrentAssets = balanceSheet[0].totalCurrentAssets ?? 0
-                        stockDataInst.totalNonCurrentAssets = balanceSheet[0].totalNonCurrentAssets ?? 0
-                    }
-                    portfolio[stockSymbol] = stockDataInst
+                case .success(let stockData):
+                    let balanceSheetData = stockData.context?.dispatcher?.stores?.QuoteSummaryStore?.balanceSheetHistoryQuarterly?.balanceSheetStatements?[0]
+                    stockDataInst.balanceSheetFillingDate = balanceSheetData?.endDate?.fmt ?? ""
+                    stockDataInst.totalCurrentAssets = balanceSheetData?.totalCurrentAssets?.raw ?? 0
+                    stockDataInst.totalNonCurrentAssets = (((balanceSheetData?.totalAssets?.raw) ?? 0) - ((balanceSheetData?.totalCurrentAssets?.raw) ?? 0))
+                    self.portfolio[stockSymbol] = stockDataInst
                     self.loadedBalanceSheetsCounter += 1
                 case .failure(let error):
                     switch error {

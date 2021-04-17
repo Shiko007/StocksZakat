@@ -24,20 +24,21 @@ class StocksData {
         case badURL , requestFailed , unknown
     }
     
-    func getCompanyBalanceSheet(company: String , completion: @escaping (Result<[balanceSheetElements],NetworkError>) -> Void){
-        let defualtElements : [balanceSheetElements] = []
-        guard let apiURL = URL(string: StocksConfiguration().apiURLPrefix + company + StocksConfiguration().apiPeriod + StocksConfiguration().apiNumberOfRetreivedData + StocksConfiguration().apiKey) else {
+    func getCompanyBalanceSheet(company: String , completion: @escaping (Result<balanceSheetContext,NetworkError>) -> Void){
+        guard let apiURL = URL(string: StocksConfiguration().stockBalanceSheetPrefix + company + StocksConfiguration().stockBalanceSheetSuffix) else {
             completion(.failure(.badURL))
             return
         }
         URLSession.shared.dataTask(with: apiURL){ data , response , error in
             DispatchQueue.main.async {
                 if let data = data{
-                    if(data.count > 256){ //Guard against premium features or unavailable info
-                        completion(.success(JSONParser().parseBalanceSheet(data: data)!))
-                    }
-                    else{
-                        completion(.success(defualtElements))
+                    let htmlAsString = String(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
+                    for line in htmlAsString.split(separator: "\n"){
+                        if(line.contains("root.App.main = ")){
+                            let balanceSheetJSON = String(line.replacingOccurrences(of: "root.App.main = ", with: "").dropLast())
+                            completion(.success(JSONParser().parseBalanceSheet(data: balanceSheetJSON)!))
+                            break
+                        }
                     }
                 } else if error != nil{
                     completion(.failure(.requestFailed))

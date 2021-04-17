@@ -33,8 +33,10 @@ class PortfolioVC : UIViewController {
     }
     
     func handleDeleteSwipe(){
+        let zakatVC = self.tabBarController?.viewControllers![1].children[0] as! ZakatVC
         UserStocksCoreData().deleteStockItem(item:matchStockItemWith(stockSymbol: selectedSymbol))
         portfolio.removeValue(forKey: selectedSymbol)
+        zakatVC.updateBalanceSheetData()
     }
     
     func matchStockItemWith(stockSymbol: String) -> UserStocksItem{
@@ -49,6 +51,7 @@ class PortfolioVC : UIViewController {
     }
     
     func loadStoredUserStockItems(){
+        let zakatVC = self.tabBarController?.viewControllers![1].children[0] as! ZakatVC
         var stockDataInst = stockData(symbol: "",currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0,zakatPerStock : 0)
         userStocksCoreDataItems = UserStocksCoreData().loadStoredStocks()
         for userStockItem in userStocksCoreDataItems{
@@ -56,6 +59,7 @@ class PortfolioVC : UIViewController {
             stockDataInst.userOwned = userStockItem.stocksCount
             portfolio[userStockItem.stockSymbol] = stockDataInst
         }
+        zakatVC.updateBalanceSheetData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

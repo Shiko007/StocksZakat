@@ -10,7 +10,6 @@ import UIKit
 class StockOverviewVC : UIViewController {
     var stockSymbol: String = ""
     var stockDataAvailable : Bool = false
-    var balanceSheetInfo: balanceSheetElements?
     var balanceSheetNotAvailable: Bool = false
     var portfolioVC : UIViewController?
     var stockAlreadyInPortfolio : Bool = true
@@ -81,27 +80,37 @@ class StockOverviewVC : UIViewController {
         balanceSheetNotAvailable = false
         StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self] result in
             switch result{
-            case .success(let balanceSheet):
-                if(balanceSheet.isEmpty != true){
-                    self.balanceSheetInfo = balanceSheet[0]
-                    self.stockSymbolLabel.text = balanceSheet[0].symbol
-                    self.stockDataInst.symbol = balanceSheet[0].symbol!
-                    self.reportedCurrencyLabel.text = "Report Currency: " + balanceSheet[0].reportedCurrency!
-                    self.stockDataInst.currency = balanceSheet[0].reportedCurrency!
-                    self.fillingDateLabel.text = "Filling Date: " + balanceSheet[0].fillingDate!
-                    self.stockDataInst.balanceSheetFillingDate = balanceSheet[0].fillingDate!
-                    self.totalCurrentAssetLabel.text = "Total Current Assets: " + String(balanceSheet[0].totalCurrentAssets!)
-                    self.stockDataInst.totalCurrentAssets = balanceSheet[0].totalCurrentAssets!
-                    self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(balanceSheet[0].totalNonCurrentAssets!)
-                    self.stockDataInst.totalNonCurrentAssets = balanceSheet[0].totalNonCurrentAssets!
-                    self.youOwn.text = "You Own: " + String(portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0)
-                    self.stockDataInst.userOwned = portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0
-                    self.stockDataAvailable = true
-                    self.configureAddorRemoveButton()
-                }
-                else{
+            case .success(let stockData):
+                if let balanceStatments = stockData.context?.dispatcher?.stores?.QuoteSummaryStore?.balanceSheetHistoryQuarterly?.balanceSheetStatements {
+                    if balanceStatments.count != 0 {
+                        let stockSymbol = stockData.context?.dispatcher?.stores?.PageStore?.pageData.symbol ?? ""
+                        let stockFinancialCurrency = stockData.context?.dispatcher?.stores?.QuoteSummaryStore?.earnings?.financialCurrency ?? ""
+                        let stockFinancialFillingDate = balanceStatments[0].endDate?.fmt ?? ""
+                        let stockTotalCurrentAssets = balanceStatments[0].totalCurrentAssets?.raw ?? 0
+                        let stockTotalAssets = balanceStatments[0].totalAssets?.raw ?? 0
+                        let stockTotalNonCurrentAssets = stockTotalAssets - stockTotalCurrentAssets
+                        self.stockSymbolLabel.text = stockSymbol
+                        self.stockDataInst.symbol = stockSymbol
+                        self.reportedCurrencyLabel.text = "Report Currency: " + stockFinancialCurrency
+                        self.stockDataInst.currency = stockFinancialCurrency
+                        self.fillingDateLabel.text = "Filling Date: " + stockFinancialFillingDate
+                        self.stockDataInst.balanceSheetFillingDate = stockFinancialFillingDate
+                        self.totalCurrentAssetLabel.text = "Total Current Assets: " + String(stockTotalCurrentAssets)
+                        self.stockDataInst.totalCurrentAssets = stockTotalCurrentAssets
+                        self.totalNonCurrentAssetLabel.text = "Total Non-Current Assets: " + String(stockTotalNonCurrentAssets)
+                        self.stockDataInst.totalNonCurrentAssets = stockTotalNonCurrentAssets
+                        self.youOwn.text = "You Own: " + String(portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0)
+                        self.stockDataInst.userOwned = portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0
+                        self.stockDataAvailable = true
+                        self.configureAddorRemoveButton()
+                    }
+                    else{
+                        self.stockSymbolLabel.text = "Unavailable"
+                        stockDataAvailable = false
+                    }
+                }else{
                     self.stockSymbolLabel.text = "Unavailable"
-                    self.stockDataAvailable = false
+                    stockDataAvailable = false
                 }
             case .failure(let error):
                 switch error {
