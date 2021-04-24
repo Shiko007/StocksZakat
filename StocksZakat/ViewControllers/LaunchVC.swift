@@ -10,6 +10,7 @@ import UIKit
 class LaunchVC : UIViewController {
     var availableStocksSymbols : [String] = []
     var userStocksCoreDataItems : [UserStocksItem] = []
+    var currencyExchangeRates : currencies?
     var portfolio : [String:stockData] = [:]
     var symbolsLoadedFlag : Bool = false {
         didSet{
@@ -29,7 +30,7 @@ class LaunchVC : UIViewController {
         didSet{
             if(userStoredProtfolioLoaded == true){
                 loadingAppCounter += 1
-                loadUserPortfolioBalanceSheets()
+                loadPortfolioStocksData()
             }
         }
     }
@@ -38,7 +39,6 @@ class LaunchVC : UIViewController {
         didSet{
             if(loadedBalanceSheets == true){
                 loadingAppCounter += 1
-                loadPortfolioStocksData()
             }
         }
     }
@@ -55,6 +55,7 @@ class LaunchVC : UIViewController {
         didSet{
             if(loadedStockData == true){
                 loadingAppCounter += 1
+                loadUserPortfolioBalanceSheets()
             }
         }
     }
@@ -67,9 +68,17 @@ class LaunchVC : UIViewController {
         }
     }
     
+    var loadedCurrencyRates : Bool = false {
+        didSet{
+            if loadedCurrencyRates == true{
+                loadingAppCounter += 1
+            }
+        }
+    }
+    
     var loadingAppCounter : Int = 0 {
         didSet{
-            if((symbolsLoadedFlag == true) && (userStoredProtfolioLoaded == true) && (loadedBalanceSheets == true) && (loadedStockData == true)){
+            if((symbolsLoadedFlag == true) && (userStoredProtfolioLoaded == true) && (loadedBalanceSheets == true) && (loadedStockData == true) && (loadedCurrencyRates == true)){
                 appLoaded = true
             }
         }
@@ -88,9 +97,13 @@ class LaunchVC : UIViewController {
         let tabController: UITabBarController = segue.destination as! UITabBarController
         let navController: UINavigationController = tabController.viewControllers![0] as! UINavigationController
         let nextViewController = navController.viewControllers[0] as! PortfolioVC
+        let zakatNavController: UINavigationController = tabController.viewControllers![1] as! UINavigationController
+        let zakatViewController = zakatNavController.viewControllers[0] as! ZakatVC
         nextViewController.availableStocksSymbols = self.availableStocksSymbols.sorted()
         nextViewController.portfolio = portfolio
         nextViewController.userStocksCoreDataItems = userStocksCoreDataItems
+        nextViewController.currencyExchangeRates = currencyExchangeRates
+        zakatViewController.currencyExchangeRates = currencyExchangeRates
     }
     
     override func viewDidLoad() {
@@ -98,6 +111,7 @@ class LaunchVC : UIViewController {
         // Do any additional setup after loading the view.
         loadStockSymbols()
         loadStoredUserStockItems()
+        loadCurrencyExchangeRates(currency : GenericConfiguration().preferedCurrency)
     }
     
     func loadStockSymbols(){
@@ -154,7 +168,11 @@ class LaunchVC : UIViewController {
                     stockDataInst.currency = stockData.quoteResponse.result?[0].financialCurrency ?? ""
                     stockDataInst.marketCap = stockData.quoteResponse.result?[0].marketCap ?? 0
                     stockDataInst.price = stockData.quoteResponse.result?[0].regularMarketPrice ?? 0
-                    stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
+                    if(Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) > 0){
+                        stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
+                    }else{
+                        stockDataInst.zakatPerStock = 0
+                    }
                     portfolio[stockSymbol] = stockDataInst
                     loadedStockDataCounter += 1
                 case .failure(let error):
@@ -173,13 +191,23 @@ class LaunchVC : UIViewController {
     
     func loadBalanceSheet(stockSymbol : String){
         if var stockDataInst = portfolio[stockSymbol]{
-            StocksData().getCompanyBalanceSheet(company: stockSymbol){result in
+            StocksData().getCompanyBalanceSheet(company: stockSymbol){ [self]result in
                 switch result{
                 case .success(let stockData):
                     let balanceSheetData = stockData.context?.dispatcher?.stores?.QuoteSummaryStore?.balanceSheetHistoryQuarterly?.balanceSheetStatements?[0]
                     stockDataInst.balanceSheetFillingDate = balanceSheetData?.endDate?.fmt ?? ""
                     stockDataInst.totalCurrentAssets = balanceSheetData?.totalCurrentAssets?.raw ?? 0
                     stockDataInst.totalNonCurrentAssets = (((balanceSheetData?.totalAssets?.raw) ?? 0) - ((balanceSheetData?.totalCurrentAssets?.raw) ?? 0))
+                    if(stockDataInst.currency.lowercased() != GenericConfiguration().preferedCurrency){
+                        let conversionRate = CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
+                        stockDataInst.totalCurrentAssets = Int(Double(stockDataInst.totalCurrentAssets) * conversionRate)
+                        stockDataInst.totalNonCurrentAssets = Int(Double(stockDataInst.totalNonCurrentAssets) * conversionRate)
+                    }
+                    if(Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) > 0){
+                        stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
+                    }else{
+                        stockDataInst.zakatPerStock = 0
+                    }
                     self.portfolio[stockSymbol] = stockDataInst
                     self.loadedBalanceSheetsCounter += 1
                 case .failure(let error):
@@ -191,6 +219,25 @@ class LaunchVC : UIViewController {
                     case .unknown:
                         print("Uknown Error!")
                     }
+                }
+            }
+        }
+    }
+    
+    func loadCurrencyExchangeRates(currency: String){
+        CurrencyExchange().getCurrencyExchangeRates(currency: currency){ [self] result in
+            switch result{
+            case .success(let currencyExchangeData):
+                currencyExchangeRates = currencyExchangeData
+                loadedCurrencyRates = true
+            case .failure(let error):
+                switch error {
+                case .badURL:
+                    print("Bad URL!")
+                case .requestFailed:
+                    print("Request Failed!")
+                case .unknown:
+                    print("Uknown Error!")
                 }
             }
         }

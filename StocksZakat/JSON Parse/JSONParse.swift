@@ -46,4 +46,17 @@ class JSONParser {
         }
         return jsonData
     }
+    
+    func currencyExchangeRate(data : Data?) -> currencies?{
+        var jsonData:currencies?
+        let decoder = JSONDecoder()
+        do{
+            jsonData = try decoder.decode(currencies.self, from: data!)
+            return jsonData
+        }
+        catch{
+            print("Error While Reading and Parsing Currency Exchange Rate JSON")
+        }
+        return jsonData
+    }
 }

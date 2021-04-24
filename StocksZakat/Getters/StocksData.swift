@@ -87,4 +87,6 @@ class StocksData {
             }
         }.resume()
     }
+    
+    
 }

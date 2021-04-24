@@ -9,4 +9,5 @@ import Foundation
 
 class GenericConfiguration{
     let finnhubApiKey:String = "c1hl1n748v6q1s3o3ct0"
+    let preferedCurrency:String = "usd"
 }

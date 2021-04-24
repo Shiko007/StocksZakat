@@ -8,7 +8,8 @@
 import UIKit
 
 class TotalVC : UIViewController {
-
+    var currencyExchangeRates : currencies?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
