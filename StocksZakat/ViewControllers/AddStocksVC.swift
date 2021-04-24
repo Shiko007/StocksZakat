@@ -16,6 +16,7 @@ class AddStocksVC : UIViewController {
     var availableStocksSymbols : [String] = []
     var searchSymbols: [String] = []
     var selectedSymbol : String = ""
+    var currencyExchangeRates : currencies?
     var portfolioVC : UIViewController?
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class AddStocksVC : UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextView =  segue.destination as! StockOverviewVC
         nextView.stockSymbol = selectedSymbol
+        nextView.currencyExchangeRates = currencyExchangeRates
         nextView.portfolioVC = self.portfolioVC
     }
 }

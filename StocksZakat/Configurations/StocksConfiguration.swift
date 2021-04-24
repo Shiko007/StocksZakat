@@ -8,7 +8,7 @@
 import Foundation
 
 class StocksConfiguration {
-    let supportedStockRegions = ["US"]
+    let supportedStockRegions = ["US","DE","CN"]
     
     /* All Available Regions ["AS","AT","AX","BA","BC","BD","BE","BK","BO","BR","CN","CO","CR","DB","DE","DU","F","HE","HK","HM","IC","IR","IS","JK","JO","KL","KQ","KS","L","LN","LS","MC","ME","MI","MU","MX","NE","NL","NS","NZ","OL","PA","PM","PR","QA","RG","SA","SG","SI","SN","SR","SS","ST","SW","SZ","T","TA","TL","TO","TW","US","V","VI","VN","VS","WA","HA","SX","TG","SC"]*/
     
@@ -20,4 +20,7 @@ class StocksConfiguration {
     
     let stockBalanceSheetPrefix:String = "https://finance.yahoo.com/quote/"
     let stockBalanceSheetSuffix:String = "/balance-sheet"
+    
+    let currencyExchangeRateAPIPrefix:String = "https://www.floatrates.com/daily/"
+    let currencyExchangeRateAPISuffix:String = ".json"
 }

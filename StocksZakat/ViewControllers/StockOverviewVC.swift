@@ -11,6 +11,7 @@ class StockOverviewVC : UIViewController {
     var stockSymbol: String = ""
     var stockDataAvailable : Bool = false
     var balanceSheetNotAvailable: Bool = false
+    var currencyExchangeRates : currencies?
     var portfolioVC : UIViewController?
     var stockAlreadyInPortfolio : Bool = true
     var stockDataInst = stockData(symbol: "", currency: "", price: 0, marketCap: 0, userOwned: 0, balanceSheetFillingDate: "", totalCurrentAssets: 0, totalNonCurrentAssets: 0, zakatPerStock: 0)
@@ -101,6 +102,11 @@ class StockOverviewVC : UIViewController {
                         self.stockDataInst.totalNonCurrentAssets = stockTotalNonCurrentAssets
                         self.youOwn.text = "You Own: " + String(portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0)
                         self.stockDataInst.userOwned = portfolioVCInstance.portfolio[stockSymbol]?.userOwned ?? 0
+                        if(stockDataInst.currency.lowercased() != GenericConfiguration().preferedCurrency){
+                            let conversionRate = CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
+                            stockDataInst.totalCurrentAssets = Int(Double(stockDataInst.totalCurrentAssets) * conversionRate)
+                            stockDataInst.totalNonCurrentAssets = Int(Double(stockDataInst.totalNonCurrentAssets) * conversionRate)
+                        }
                         self.stockDataAvailable = true
                         self.configureAddorRemoveButton()
                     }

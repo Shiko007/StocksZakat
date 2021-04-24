@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		370B9A87261A0F3300E3AC4E /* StockAddEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370B9A86261A0F3300E3AC4E /* StockAddEditVC.swift */; };
 		372B708D2621EA1B00F243F5 /* ZakatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B708C2621EA1B00F243F5 /* ZakatTableCell.swift */; };
+		37347B172634753B005D4847 /* CurrencyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37347B162634753B005D4847 /* CurrencyExchange.swift */; };
 		3746C8872610AA65009B597B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8862610AA65009B597B /* AppDelegate.swift */; };
 		3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C8882610AA65009B597B /* SceneDelegate.swift */; };
 		3746C88B2610AA65009B597B /* PortfolioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746C88A2610AA65009B597B /* PortfolioVC.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		370B9A86261A0F3300E3AC4E /* StockAddEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAddEditVC.swift; sourceTree = "<group>"; };
 		372B708C2621EA1B00F243F5 /* ZakatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZakatTableCell.swift; sourceTree = "<group>"; };
+		37347B162634753B005D4847 /* CurrencyExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExchange.swift; sourceTree = "<group>"; };
 		3746C8832610AA65009B597B /* StocksZakat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksZakat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3746C8862610AA65009B597B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3746C8882610AA65009B597B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,9 +111,7 @@
 				37AA4996261926520093821D /* UserStocksCoreDataItems */,
 				37EDADE52612446600AD2483 /* JSON Parse */,
 				37FDDCD6261A74C6002D8F15 /* Extensions */,
-				372B708B2621E9FF00F243F5 /* ZakatView */,
-				378907A32619E84E00955FE7 /* PortfolioView */,
-				37DDBA252610BF7F00E85A0C /* StocksData */,
+				37DDBA252610BF7F00E85A0C /* Getters */,
 				3746C89C2610B050009B597B /* ViewControllers */,
 				3746C8862610AA65009B597B /* AppDelegate.swift */,
 				3746C8882610AA65009B597B /* SceneDelegate.swift */,
@@ -126,6 +126,8 @@
 		3746C89C2610B050009B597B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				372B708B2621E9FF00F243F5 /* ZakatView */,
+				378907A32619E84E00955FE7 /* PortfolioView */,
 				37874B22261390DD00EFED88 /* LaunchVC.swift */,
 				3746C8A62610B0F2009B597B /* TotalVC.swift */,
 				3746C8A92610B10F009B597B /* SettingsVC.swift */,
@@ -156,12 +158,13 @@
 			path = UserStocksCoreDataItems;
 			sourceTree = "<group>";
 		};
-		37DDBA252610BF7F00E85A0C /* StocksData */ = {
+		37DDBA252610BF7F00E85A0C /* Getters */ = {
 			isa = PBXGroup;
 			children = (
 				37DDBA262610BF9400E85A0C /* StocksData.swift */,
+				37347B162634753B005D4847 /* CurrencyExchange.swift */,
 			);
-			path = StocksData;
+			path = Getters;
 			sourceTree = "<group>";
 		};
 		37EDADDF261242FC00AD2483 /* Configurations */ = {
@@ -284,6 +287,7 @@
 				37EDADE12612431000AD2483 /* GenericConfiguration.swift in Sources */,
 				37FDDCDD261A80A2002D8F15 /* StringExtension.swift in Sources */,
 				3746C8892610AA65009B597B /* SceneDelegate.swift in Sources */,
+				37347B172634753B005D4847 /* CurrencyExchange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

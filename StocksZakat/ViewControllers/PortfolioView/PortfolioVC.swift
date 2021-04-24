@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  StocksZakat
+//  PortfolioVC
 //
 //  Created by Sherif Yasser on 28.03.21.
 //
@@ -14,6 +14,7 @@ class PortfolioVC : UIViewController {
             handlePortfolioUpdate()
         }
     }
+    var currencyExchangeRates : currencies?
     var availableStocksSymbols : [String] = []
     var selectedSymbol : String = ""
     
@@ -36,7 +37,7 @@ class PortfolioVC : UIViewController {
         let zakatVC = self.tabBarController?.viewControllers![1].children[0] as! ZakatVC
         UserStocksCoreData().deleteStockItem(item:matchStockItemWith(stockSymbol: selectedSymbol))
         portfolio.removeValue(forKey: selectedSymbol)
-        zakatVC.updateBalanceSheetData()
+        zakatVC.updateNewStockData()
     }
     
     func matchStockItemWith(stockSymbol: String) -> UserStocksItem{
@@ -59,7 +60,7 @@ class PortfolioVC : UIViewController {
             stockDataInst.userOwned = userStockItem.stocksCount
             portfolio[userStockItem.stockSymbol] = stockDataInst
         }
-        zakatVC.updateBalanceSheetData()
+        zakatVC.updateNewStockData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -68,10 +69,12 @@ class PortfolioVC : UIViewController {
             let nextViewController = segue.destination as! AddStocksVC
             nextViewController.availableStocksSymbols = self.availableStocksSymbols
             nextViewController.portfolioVC = self
+            nextViewController.currencyExchangeRates = currencyExchangeRates
         case "portfolioToStockInfoSegue":
             let nextView =  segue.destination as! StockOverviewVC
             nextView.stockSymbol = selectedSymbol
             nextView.portfolioVC = self
+            nextView.currencyExchangeRates = currencyExchangeRates
         default:
             print("Unknown Segue Identifier")
         }
