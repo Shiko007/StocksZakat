@@ -99,8 +99,11 @@ class LaunchVC : UIViewController {
         let nextViewController = navController.viewControllers[0] as! PortfolioVC
         let zakatNavController: UINavigationController = tabController.viewControllers![1] as! UINavigationController
         let zakatViewController = zakatNavController.viewControllers[0] as! ZakatVC
+        let totalZakatNavController: UINavigationController = tabController.viewControllers![2] as! UINavigationController
+        let totalZakatViewController = totalZakatNavController.viewControllers[0] as! TotalVC
         nextViewController.availableStocksSymbols = self.availableStocksSymbols.sorted()
         nextViewController.portfolio = portfolio
+        totalZakatViewController.portfolio = portfolio
         nextViewController.userStocksCoreDataItems = userStocksCoreDataItems
         nextViewController.currencyExchangeRates = currencyExchangeRates
         zakatViewController.currencyExchangeRates = currencyExchangeRates

@@ -17,11 +17,7 @@ class ZakatVC : UIViewController {
     var loadedBalanceSheetsCounter = 0 {
         didSet{
             if(loadedBalanceSheetsCounter == portfolio.count){
-                loadedBalanceSheetsCounter = 0
-                loadedStocksDataCounter = 0
-                if(zakatTable != nil){
-                    zakatTable.reloadData()
-                }
+                handlePortfolioUpdate()
             }
         }
     }
@@ -119,6 +115,16 @@ class ZakatVC : UIViewController {
             if(portfolio[stock] != nil){
                 loadStockData(stockSymbol: stock)
             }
+        }
+    }
+    
+    func handlePortfolioUpdate(){
+        let totalVC = self.tabBarController?.viewControllers![2].children[0] as! TotalVC
+        totalVC.portfolio = portfolio
+        loadedBalanceSheetsCounter = 0
+        loadedStocksDataCounter = 0
+        if(zakatTable != nil){
+            zakatTable.reloadData()
         }
     }
 }

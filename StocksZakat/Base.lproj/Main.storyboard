@@ -459,14 +459,70 @@
                     <view key="view" contentMode="scaleToFill" id="7Mb-Ec-Igb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ekz-bA-qjn">
+                                <rect key="frame" x="20" y="298" width="374" height="102"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="Tvf-86-ZpA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total amount of" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itu-f9-z0q">
+                                <rect key="frame" x="90.5" y="180" width="233" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="2Rx-Cq-oz8"/>
+                                    <constraint firstAttribute="width" constant="233" id="LdA-1G-vl0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To be paid" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ma-5b-EXF">
+                                <rect key="frame" x="90.5" y="549" width="233" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="6E3-EW-KPy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21h-P4-VDT">
+                                <rect key="frame" x="119" y="408" width="176" height="85"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="85" id="VgL-C2-smB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="zdv-t1-Jic"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="21h-P4-VDT" firstAttribute="top" secondItem="Ekz-bA-qjn" secondAttribute="bottom" constant="8" symbolic="YES" id="Gff-8R-jLC"/>
+                            <constraint firstItem="itu-f9-z0q" firstAttribute="top" secondItem="zdv-t1-Jic" secondAttribute="top" constant="92" id="Mlm-Cz-nWg"/>
+                            <constraint firstItem="Ekz-bA-qjn" firstAttribute="top" secondItem="itu-f9-z0q" secondAttribute="bottom" constant="49" id="OeW-cP-dgU"/>
+                            <constraint firstItem="zdv-t1-Jic" firstAttribute="trailing" secondItem="7Ma-5b-EXF" secondAttribute="trailing" constant="90.5" id="V9C-t0-27d"/>
+                            <constraint firstItem="Ekz-bA-qjn" firstAttribute="leading" secondItem="zdv-t1-Jic" secondAttribute="leading" constant="20" id="WRa-Ut-GYo"/>
+                            <constraint firstItem="itu-f9-z0q" firstAttribute="centerX" secondItem="zdv-t1-Jic" secondAttribute="centerX" id="dAp-Sf-SPm"/>
+                            <constraint firstItem="7Ma-5b-EXF" firstAttribute="leading" secondItem="zdv-t1-Jic" secondAttribute="leading" constant="90.5" id="ffg-EU-erl"/>
+                            <constraint firstItem="zdv-t1-Jic" firstAttribute="trailing" secondItem="Ekz-bA-qjn" secondAttribute="trailing" constant="20" id="fgh-Fi-vsf"/>
+                            <constraint firstItem="7Ma-5b-EXF" firstAttribute="top" secondItem="21h-P4-VDT" secondAttribute="bottom" constant="56" id="ioI-of-nsD"/>
+                            <constraint firstItem="zdv-t1-Jic" firstAttribute="trailing" secondItem="21h-P4-VDT" secondAttribute="trailing" constant="119" id="wWK-Je-aG4"/>
+                            <constraint firstItem="21h-P4-VDT" firstAttribute="leading" secondItem="zdv-t1-Jic" secondAttribute="leading" constant="119" id="woa-6U-ST8"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Total" id="o6h-gW-l2b"/>
+                    <connections>
+                        <outlet property="totalZakatCurrency" destination="21h-P4-VDT" id="e8l-oz-ydv"/>
+                        <outlet property="totalZakatValue" destination="Ekz-bA-qjn" id="QAs-bS-EFx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5ou-aJ-1cx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1235" y="1010"/>
+            <point key="canvasLocation" x="1234.7826086956522" y="1009.8214285714286"/>
         </scene>
         <!--Settings-->
         <scene sceneID="VFc-uz-aqa">
