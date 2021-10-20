@@ -24,7 +24,7 @@ class countCoder{
         let units:[String] = ["K","M","B","T","aa","ab","ac","ad","ae","af","ag","ah","ai"]
 
         let roundedNum:Double = (10 * num / pow(1000.0,Double(exp))) / 10
-        print(exp-1)
+
         return "\(sign)\(roundedNum)\(units[exp-1])" as NSString
     }
 }

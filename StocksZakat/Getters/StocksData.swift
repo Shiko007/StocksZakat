@@ -8,6 +8,7 @@
 import UIKit
 
 struct stockData {
+    var priceCurrency : String = ""
     var symbol : String = ""
     var currency : String = ""
     var price : Double = 0

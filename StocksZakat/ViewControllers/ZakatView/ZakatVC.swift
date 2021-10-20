@@ -50,6 +50,7 @@ class ZakatVC : UIViewController {
                 portfolio[stockSymbol]?.marketCap = stockPrice.quoteResponse.result![0].marketCap!
                 portfolio[stockSymbol]?.price = stockPrice.quoteResponse.result![0].regularMarketPrice!
                 portfolio[stockSymbol]?.currency = stockPrice.quoteResponse.result?[0].financialCurrency ?? ""
+                portfolio[stockSymbol]?.priceCurrency = stockPrice.quoteResponse.result?[0].currency ?? ""
                 loadedStocksDataCounter += 1
             case .failure(let error):
                 switch error {
@@ -76,11 +77,12 @@ class ZakatVC : UIViewController {
                     stockDataInst.totalCurrentAssets = balanceSheetData?.totalCurrentAssets?.raw ?? 0
                     stockDataInst.totalNonCurrentAssets = (((balanceSheetData?.totalAssets?.raw) ?? 0) - ((balanceSheetData?.totalCurrentAssets?.raw) ?? 0))
                     if(stockDataInst.currency.lowercased() != GenericConfiguration().preferedCurrency){
-                        let conversionRate = CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
+                        let conversionRate = 1 / CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
                         stockDataInst.totalCurrentAssets = Int(Double(stockDataInst.totalCurrentAssets) * conversionRate)
                         stockDataInst.totalNonCurrentAssets = Int(Double(stockDataInst.totalNonCurrentAssets) * conversionRate)
+                        stockDataInst.marketCap = Int(Double(stockDataInst.marketCap) * conversionRate)
                     }
-                    zakatableAssets = Double(portfolio[stockSymbol]!.marketCap - stockDataInst.totalNonCurrentAssets)
+                    zakatableAssets = Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets)
                     if(zakatableAssets > 0){
                         zakatPerStock = round(Double((zakatableAssets / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
                     }

@@ -39,7 +39,13 @@ class TotalVC : UIViewController {
     func getTotalZakat() -> Int{
         var totalZakat : Double = 0
         for (_,data) in portfolio{
-            totalZakat = totalZakat + ((data.price * data.userOwned) * (data.zakatPerStock / 100))
+            if(data.priceCurrency.lowercased() != GenericConfiguration().preferedCurrency){
+                let conversionRate = 1 / CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: data.currency.lowercased())
+                totalZakat = totalZakat + (((data.price * conversionRate) * data.userOwned) * (data.zakatPerStock / 100))
+            }
+            else{
+                totalZakat = totalZakat + ((data.price * data.userOwned) * (data.zakatPerStock / 100))
+            }
         }
         return Int(round(totalZakat * 0.025))
     }
