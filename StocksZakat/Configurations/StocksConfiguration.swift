@@ -8,9 +8,9 @@
 import Foundation
 
 class StocksConfiguration {
-    let supportedStockRegions = ["US","DE","CN"]
+    let supportedStockRegions = ["US","DE","CN","PA","DU"]
     
-    /* All Available Regions ["AS","AT","AX","BA","BC","BD","BE","BK","BO","BR","CN","CO","CR","DB","DE","DU","F","HE","HK","HM","IC","IR","IS","JK","JO","KL","KQ","KS","L","LN","LS","MC","ME","MI","MU","MX","NE","NL","NS","NZ","OL","PA","PM","PR","QA","RG","SA","SG","SI","SN","SR","SS","ST","SW","SZ","T","TA","TL","TO","TW","US","V","VI","VN","VS","WA","HA","SX","TG","SC"]*/
+    /* All Available Regions BE DU F HM  ["AS","AT","AX","BA","BC","BD","BE","BK","BO","BR","CN","CO","CR","DB","DE","DU","F","HE","HK","HM","IC","IR","IS","JK","JO","KL","KQ","KS","L","LN","LS","MC","ME","MI","MU","MX","NE","NL","NS","NZ","OL","PA","PM","PR","QA","RG","SA","SG","SI","SN","SR","SS","ST","SW","SZ","T","TA","TL","TO","TW","US","V","VI","VN","VS","WA","HA","SX","TG","SC"]*/
     
     let symbolsAPIPrefix:String = "https://finnhub.io/api/v1/stock/symbol?"
     let symbolsAPIExchangeMarket:String = "exchange="

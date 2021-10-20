@@ -107,6 +107,7 @@ class LaunchVC : UIViewController {
         nextViewController.userStocksCoreDataItems = userStocksCoreDataItems
         nextViewController.currencyExchangeRates = currencyExchangeRates
         zakatViewController.currencyExchangeRates = currencyExchangeRates
+        totalZakatViewController.currencyExchangeRates = currencyExchangeRates
     }
     
     override func viewDidLoad() {
@@ -169,6 +170,7 @@ class LaunchVC : UIViewController {
                 switch result{
                 case .success(let stockData):
                     stockDataInst.currency = stockData.quoteResponse.result?[0].financialCurrency ?? ""
+                    stockDataInst.priceCurrency = stockData.quoteResponse.result?[0].currency ?? ""
                     stockDataInst.marketCap = stockData.quoteResponse.result?[0].marketCap ?? 0
                     stockDataInst.price = stockData.quoteResponse.result?[0].regularMarketPrice ?? 0
                     if(Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) > 0){
@@ -202,9 +204,10 @@ class LaunchVC : UIViewController {
                     stockDataInst.totalCurrentAssets = balanceSheetData?.totalCurrentAssets?.raw ?? 0
                     stockDataInst.totalNonCurrentAssets = (((balanceSheetData?.totalAssets?.raw) ?? 0) - ((balanceSheetData?.totalCurrentAssets?.raw) ?? 0))
                     if(stockDataInst.currency.lowercased() != GenericConfiguration().preferedCurrency){
-                        let conversionRate = CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
+                        let conversionRate = 1 / CurrencyExchange().getCurrencyConversionRate(currenciesTable: currencyExchangeRates!, fromCurrency: stockDataInst.currency.lowercased())
                         stockDataInst.totalCurrentAssets = Int(Double(stockDataInst.totalCurrentAssets) * conversionRate)
                         stockDataInst.totalNonCurrentAssets = Int(Double(stockDataInst.totalNonCurrentAssets) * conversionRate)
+                        stockDataInst.marketCap = Int(Double(stockDataInst.marketCap) * conversionRate)
                     }
                     if(Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) > 0){
                         stockDataInst.zakatPerStock = round(((Double(stockDataInst.marketCap - stockDataInst.totalNonCurrentAssets) / Double(stockDataInst.marketCap)) * 100) * 1000) / 1000
